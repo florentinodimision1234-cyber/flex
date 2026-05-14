@@ -106,6 +106,51 @@ Guarda estos valores. Ahora mismo son los más importantes:
 | `service_role key` | La clave de admin, **solo en el servidor** |
 | `Studio URL` | El panel visual de la DB (como phpMyAdmin pero mejor) |
 
+### Posible error en Windows: puerto ocupado
+
+En Windows es frecuente que `npx supabase start` falle con un error similar a:
+
+```
+Error: failed to start docker container: ... port is already allocated
+```
+
+o bien que algún servicio no arranque porque el puerto ya está en uso por otro proceso del sistema.
+
+**Causa:** Windows tiene varios servicios propios (Hyper-V, IIS, SQL Server, etc.) que pueden ocupar los puertos por defecto de Supabase (54321, 54322, 54323…).
+
+**Solución:** cambiar los puertos en `supabase/config.toml`. Busca las líneas `port =` de cada servicio y asígnales valores distintos. Por ejemplo:
+
+```toml
+# supabase/config.toml
+
+[api]
+port = 57321      # cambia 54321 → 57321 (o cualquier puerto libre)
+
+[db]
+port = 57322
+shadow_port = 57320
+
+[studio]
+port = 57323
+
+[inbucket]
+port = 57324
+```
+
+Después de guardar el archivo, vuelve a ejecutar:
+
+```bash
+npx supabase start
+```
+
+Recuerda actualizar también el valor `NEXT_PUBLIC_SUPABASE_URL` en `.env.local` si cambias el puerto de la API:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:57321
+```
+
+---
+
 ### Crear el archivo `.env.local`
 
 En la raíz de tu proyecto Next.js crea el archivo `.env.local`:
@@ -224,14 +269,26 @@ Es la pregunta que surge siempre. Si metemos los productos dentro de `pedido_ite
 
 ## 3. Esquema SQL: tabla por tabla
 
-Vamos a crear las tablas en un archivo de migración. En Supabase local, las migraciones son archivos SQL que se aplican en orden.
+Vamos a crear las tablas en un archivo de migración. En Supabase local, las migraciones son archivos SQL que se aplican en orden alfabético por nombre de archivo (el timestamp del inicio los ordena).
 
-```bash
-# Crea el archivo de migración con la fecha y nombre descriptivo
-npx supabase migration new esquema_inicial
+En Flex usamos **dos migraciones separadas**:
+
+```
+supabase/migrations/
+  20260513160558_esquema_inicial.sql   ← tablas, trigger, datos + ENABLE RLS
+  20260513160559_politicas_rls.sql     ← función mi_rol() + políticas de acceso
 ```
 
-Esto crea el archivo `supabase/migrations/YYYYMMDDHHMMSS_esquema_inicial.sql`. Ábrelo y añade el SQL de los siguientes apartados en orden.
+Para crearlas:
+
+```bash
+npx supabase migration new esquema_inicial
+npx supabase migration new politicas_rls
+```
+
+**¿Por qué dos archivos?** Las tablas son estructura permanente; las políticas son reglas de negocio que cambian con frecuencia. Separar ambas cosas hace que los diffs sean más limpios y que sea fácil actualizar la seguridad sin tocar el esquema. Lo que sí va en el esquema inicial es activar RLS tabla a tabla (`ENABLE ROW LEVEL SECURITY`), porque es un atributo de la tabla: sin ese flag, las políticas del segundo archivo no tendrían ningún efecto.
+
+Abre `_esquema_inicial.sql` y añade el SQL de los siguientes apartados en orden.
 
 ---
 
@@ -608,17 +665,17 @@ Tu aplicación debe capturar ese error y mostrar al usuario un mensaje amigable.
 
 ---
 
-## 4. Aplicar la migración
+## 4. Aplicar las migraciones
 
-Con el SQL completo en el archivo de migración, aplicamos los cambios a la base de datos local:
+Con los dos archivos SQL listos, aplicamos los cambios a la base de datos local:
 
 ```bash
 npx supabase db reset
 ```
 
-Este comando borra la base de datos local y vuelve a aplicar todas las migraciones de la carpeta `migrations/` en orden. Al terminar, tu base de datos tendrá todas las tablas, el trigger y los datos iniciales.
+Este comando borra la base de datos local y vuelve a aplicar **todas** las migraciones de la carpeta `migrations/` en orden de timestamp. Primero crea las tablas y activa RLS (`_esquema_inicial.sql`), luego aplica las políticas de acceso (`_politicas_rls.sql`). Al terminar, tu base de datos tendrá las tablas, el trigger, los datos iniciales y todas las reglas de seguridad activas.
 
-Abre el Studio (`http://localhost:54323`) y ve a **Table Editor**. Deberías ver todas las tablas. Haz clic en `mesas` y verifica que las 16 filas de datos iniciales están ahí.
+Abre el Studio (`http://localhost:54323`) y ve a **Table Editor**. Deberías ver todas las tablas. Haz clic en `mesas` y verifica que las 16 filas de datos iniciales están ahí. En **Authentication → Policies** podrás ver las políticas activas de cada tabla.
 
 ---
 
@@ -772,11 +829,15 @@ auth.users ───────────────────────
 npx supabase init
 npx supabase start   # arranca Docker con todos los servicios
 
-# 2. Crear el archivo de migración con todo el SQL de este apunte
+# 2. Crear los dos archivos de migración
 npx supabase migration new esquema_inicial
-# Pegar el SQL en el archivo generado en supabase/migrations/
+# Pegar el SQL (tablas + ENABLE RLS) en supabase/migrations/..._esquema_inicial.sql
 
-# 3. Aplicar la migración
+npx supabase migration new politicas_rls
+# Pegar el SQL (mi_rol() + políticas) en supabase/migrations/..._politicas_rls.sql
+# (ver apunte 02 para el contenido completo de este archivo)
+
+# 3. Aplicar las migraciones (aplica ambos archivos en orden)
 npx supabase db reset
 
 # 4. Crear los buckets de Storage desde el Studio
@@ -798,3 +859,11 @@ Añade una tabla `eventos` a la DB que represente las noches de jam session:
 - Crea el archivo de migración correspondiente con `npx supabase migration new agregar_eventos` y aplícalo con `npx supabase db reset`.
 
 > **Pista:** Al añadir `evento_id` a `reservas`, hazlo sin `not null` para que las reservas existentes no fallen. Una reserva sin evento asociado simplemente tendrá `evento_id = null`.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| | [02 — Seguridad con RLS →](./02-seguridad-rls.md) |

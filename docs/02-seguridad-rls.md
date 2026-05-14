@@ -53,9 +53,24 @@ Ahora en las políticas usamos `public.mi_rol()` en lugar de repetir el subquery
 
 ---
 
-## 1. Activar RLS en todas las tablas
+## 1. Estructura de migraciones: esquema vs. políticas
 
-Por defecto RLS está **desactivado**. Hay que activarlo tabla a tabla. Sin ninguna política activa, una tabla con RLS habilitado deniega **todo**.
+Las migraciones de Supabase se aplican en orden por timestamp. En Flex separamos la seguridad en dos archivos:
+
+```
+supabase/migrations/
+  20260513160558_esquema_inicial.sql   ← tablas, triggers, datos de ejemplo + ENABLE RLS
+  20260513160559_politicas_rls.sql     ← función mi_rol() + todas las políticas
+```
+
+**¿Por qué esta separación?**
+
+- **`ENABLE ROW LEVEL SECURITY`** es un atributo de la tabla, no una regla de negocio. Va junto a `CREATE TABLE` porque sin ese flag las políticas no tienen efecto, y una tabla sin RLS activo es pública por defecto.
+- Las **políticas** cambian con más frecuencia (nuevos roles, ajustes de permisos). Con una migración propia, cada cambio de seguridad tiene su propio diff limpio, fácil de revisar y de revertir.
+
+### Activar RLS (en `_esquema_inicial.sql`)
+
+Por defecto RLS está **desactivado**. Hay que activarlo tabla a tabla. Sin ninguna política activa, una tabla con RLS habilitado deniega **todo** — buen estado por defecto.
 
 ```sql
 alter table public.perfiles      enable row level security;
@@ -66,6 +81,8 @@ alter table public.pedido_items  enable row level security;
 alter table public.salas_vip     enable row level security;
 alter table public.reservas      enable row level security;
 ```
+
+Las políticas se definen en la migración siguiente.
 
 ---
 
@@ -307,3 +324,11 @@ O usa la pestaña **Authentication → Policies** del Dashboard para ver las pol
 3. Escribe una query SQL que simule al portero intentando borrar una reserva y verifica que falla con el error de RLS.
 
 > **Pista:** El portero necesita verificar entradas en la puerta de las salas VIP, así que solo debe poder marcar una reserva como `completada` cuando el cliente llega.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 01 — Base de Datos y Storage](./01-db-y-storage-flex.md) | [03 — Estado con Zustand →](./03-estado-con-zustand.md) |

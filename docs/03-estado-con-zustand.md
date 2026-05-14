@@ -492,3 +492,11 @@ export async function confirmarPedido({ items, mesaId }) {
 3. Persiste el descuento en localStorage junto con `items` y `mesaId`.
 
 > **Pista:** Usa el campo `partialize` del middleware `persist` para incluir también `descuento` en los datos guardados.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 02 — Seguridad con RLS](./02-seguridad-rls.md) | [04 — Stripe y Edge Functions →](./04-stripe-y-edge-functions.md) |

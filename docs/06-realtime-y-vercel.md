@@ -464,3 +464,11 @@ Sin esto, el login con OAuth o magic links redirige a la URL incorrecta.
 3. Añade en Vercel un entorno de **Preview** diferente al de Production: usa las claves `pk_test_` de Stripe en Preview y `pk_live_` en Production. Configura los valores por entorno desde el Dashboard de Vercel.
 
 > **Pista:** Vercel permite definir valores distintos para la misma variable según el entorno (Production / Preview / Development) directamente desde la interfaz de variables de entorno.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 05 — PWA y Entradas QR](./05-pwa-y-entradas-qr.md) | |

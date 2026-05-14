@@ -448,3 +448,11 @@ export default async function PaginaExito({ searchParams }) {
 2. Maneja el evento `charge.refunded` en el webhook para registrar en DB que el reembolso se ha procesado.
 
 > **Pista:** `stripe.refunds.create({ payment_intent: '...', amount: importeEnCentimos })` acepta el Payment Intent ID que guardamos en `reservas.stripe_payment`.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 03 — Estado con Zustand](./03-estado-con-zustand.md) | [05 — PWA y Entradas QR →](./05-pwa-y-entradas-qr.md) |

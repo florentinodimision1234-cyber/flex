@@ -442,3 +442,11 @@ En móvil (Chrome), aparecerá el banner "Añadir a pantalla de inicio" automát
 > ```json
 > "shortcuts": [{ "name": "Mis entradas", "url": "/perfil", "icons": [...] }]
 > ```
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 04 — Stripe y Edge Functions](./04-stripe-y-edge-functions.md) | [06 — Realtime y Vercel →](./06-realtime-y-vercel.md) |
