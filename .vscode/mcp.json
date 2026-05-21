@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "insforge": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@insforge/mcp@latest"
+      ],
+      "env": {
+        "API_KEY": "ik_2e967fda444511584c7813829ff74dfecc66bf80e43a37abbe8f9b13a004e03a",
+        "API_BASE_URL": "https://base.servidor.dpdns.org"
+      }
+    }
+  }
+}

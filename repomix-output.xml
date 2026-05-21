@@ -1,0 +1,5275 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.claude/caveman/SKILL.md
+.claude/settings.json
+.claude/settings.local.json
+.env.local
+AGENTS.md
+diseño-jhonda/a_cinematic_night_exterior_scene_of_a_jazz_live_mu.png
+diseño-jhonda/a_dark_sleek_ui_dashboard_mockup_web_app_interf.png
+diseño-jhonda/a_dark_ui_mockup_app_concept_image_showing_two_s.png
+diseño-jhonda/a_large_graphic_presentation_poster_of_a_nightclub.png
+diseño-jhonda/a_wide_clean_dark_presentation_mockup_on_a_black.png
+diseño-jhonda/a_wide_dark_ui_dashboard_mockup_screenshot_deskto.png
+diseño-jhonda/wide_dark_ui_mockup_scene_a_black_dark_background.png
+docs/01-db-y-storage-flex.md
+docs/02-seguridad-rls.md
+docs/03-estado-con-zustand.md
+docs/04-stripe-y-edge-functions.md
+docs/05-pwa-y-entradas-qr.md
+docs/06-realtime-y-vercel.md
+docs/teoria/01-teoria.md
+docs/teoria/02-teoria.md
+supabase/.gitignore
+supabase/config.toml
+supabase/migrations/20260518105257_esquema_inicial.sql
+supabase/migrations/20260518110300_politicas_rls.sql
+supabase/snippets/Untitled query 351.sql
+supabase/snippets/Untitled query 556.sql
+supabase/snippets/Untitled query 611.sql
+supabase/snippets/Untitled query 652.sql
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".claude/caveman/SKILL.md">
+---
+name: caveman
+description: >
+  Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman
+  while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra,
+  wenyan-lite, wenyan-full, wenyan-ultra.
+  Use when user says "caveman mode", "talk like caveman", "use caveman", "less tokens",
+  "be brief", or invokes /caveman. Also auto-triggers when token efficiency is requested.
+---
+
+Respond terse like smart caveman. All technical substance stay. Only fluff die.
+
+## Persistence
+
+ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift. Still active if unsure. Off only: "stop caveman" / "normal mode".
+
+Default: **full**. Switch: `/caveman lite|full|ultra`.
+
+## Rules
+
+Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not extensive, fix not "implement a solution for"). Technical terms exact. Code blocks unchanged. Errors quoted exact.
+
+Pattern: `[thing] [action] [reason]. [next step].`
+
+Not: "Sure! I'd be happy to help you with that. The issue you're experiencing is likely caused by..."
+Yes: "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"
+
+## Intensity
+
+| Level | What change |
+|-------|------------|
+| **lite** | No filler/hedging. Keep articles + full sentences. Professional but tight |
+| **full** | Drop articles, fragments OK, short synonyms. Classic caveman |
+| **ultra** | Abbreviate (DB/auth/config/req/res/fn/impl), strip conjunctions, arrows for causality (X → Y), one word when one word enough |
+| **wenyan-lite** | Semi-classical. Drop filler/hedging but keep grammar structure, classical register |
+| **wenyan-full** | Maximum classical terseness. Fully 文言文. 80-90% character reduction. Classical sentence patterns, verbs precede objects, subjects often omitted, classical particles (之/乃/為/其) |
+| **wenyan-ultra** | Extreme abbreviation while keeping classical Chinese feel. Maximum compression, ultra terse |
+
+Example — "Why React component re-render?"
+- lite: "Your component re-renders because you create a new object reference each render. Wrap it in `useMemo`."
+- full: "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
+- ultra: "Inline obj prop → new ref → re-render. `useMemo`."
+- wenyan-lite: "組件頻重繪，以每繪新生對象參照故。以 useMemo 包之。"
+- wenyan-full: "物出新參照，致重繪。useMemo .Wrap之。"
+- wenyan-ultra: "新參照→重繪。useMemo Wrap。"
+
+Example — "Explain database connection pooling."
+- lite: "Connection pooling reuses open connections instead of creating new ones per request. Avoids repeated handshake overhead."
+- full: "Pool reuse open DB connections. No new connection per request. Skip handshake overhead."
+- ultra: "Pool = reuse DB conn. Skip handshake → fast under load."
+- wenyan-full: "池reuse open connection。不每req新開。skip handshake overhead。"
+- wenyan-ultra: "池reuse conn。skip handshake → fast。"
+
+## Auto-Clarity
+
+Drop caveman for: security warnings, irreversible action confirmations, multi-step sequences where fragment order risks misread, user asks to clarify or repeats question. Resume caveman after clear part done.
+
+Example — destructive op:
+> **Warning:** This will permanently delete all rows in the `users` table and cannot be undone.
+> ```sql
+> DROP TABLE users;
+> ```
+> Caveman resume. Verify backup exist first.
+
+## Boundaries
+
+Code/commits/PRs: write normal. "stop caveman" or "normal mode": revert. Level persist until changed or session end.
+</file>
+
+<file path=".claude/settings.json">
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "http://127.0.0.1:54321/mcp"
+    }
+  }
+}
+</file>
+
+<file path=".claude/settings.local.json">
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)"
+    ]
+  }
+}
+</file>
+
+<file path="AGENTS.md">
+---
+description: Instructions building apps with MCP
+globs: *
+alwaysApply: true
+---
+
+# InsForge SDK Documentation - Overview
+
+## What is InsForge?
+
+Backend-as-a-service (BaaS) platform providing:
+
+- **Database**: PostgreSQL with PostgREST API
+- **Authentication**: Email/password + OAuth (Google, GitHub)
+- **Storage**: File upload/download
+- **AI**: Chat completions and image generation (OpenAI-compatible)
+- **Functions**: Serverless function deployment
+- **Realtime**: WebSocket pub/sub (database + client events)
+
+## Installation
+
+The following is a step-by-step guide to installing and using the InsForge TypeScript SDK for Web applications. If you are building other types of applications, please refer to:
+- [Swift SDK documentation](/sdks/swift/overview) for iOS, macOS, tvOS, and watchOS applications.
+- [Kotlin SDK documentation](/sdks/kotlin/overview) for Android applications.
+- [REST API documentation](/sdks/rest/overview) for direct HTTP API access.
+
+### 🚨 CRITICAL: Follow these steps in order
+
+### Step 1: Download Template
+
+Use the `download-template` MCP tool to create a new project with your backend URL and anon key pre-configured.
+
+### Step 2: Install SDK
+
+```bash
+npm install @insforge/sdk@latest
+```
+
+### Step 3: Create SDK Client
+
+You must create a client instance using `createClient()` with your base URL and anon key:
+
+```javascript
+import { createClient } from '@insforge/sdk';
+
+const client = createClient({
+  baseUrl: 'https://your-app.region.insforge.app',  // Your InsForge backend URL
+  anonKey: 'your-anon-key-here'       // Get this from backend metadata
+});
+
+```
+
+**API BASE URL**: Your API base URL is `https://your-app.region.insforge.app`.
+
+## Getting Detailed Documentation
+
+### 🚨 CRITICAL: Always Fetch Documentation Before Writing Code
+
+InsForge provides official SDKs and REST APIs, use them to interact with InsForge services from your application code.
+
+- [TypeScript SDK](/sdks/typescript/overview) - JavaScript/TypeScript
+- [Swift SDK](/sdks/swift/overview) - iOS, macOS, tvOS, and watchOS
+- [Kotlin SDK](/sdks/kotlin/overview) - Android and Kotlin Multiplatform
+- [REST API](/sdks/rest/overview) - Direct HTTP API access
+
+Before writing or editing any InsForge integration code, you **MUST** call the `fetch-docs` or `fetch-sdk-docs` MCP tool to get the latest SDK documentation. This ensures you have accurate, up-to-date implementation patterns.
+
+### Use the InsForge `fetch-docs` MCP tool to get specific SDK documentation:
+
+Available documentation types:
+
+- `"instructions"` - Essential backend setup (START HERE)
+- `"real-time"` - Real-time pub/sub (database + client events) via WebSockets
+- `"db-sdk-typescript"` - Database operations with TypeScript SDK
+- **Authentication** - Choose based on implementation:
+  - `"auth-sdk-typescript"` - TypeScript SDK methods for custom auth flows
+  - `"auth-components-react"` - Pre-built auth UI for React+Vite (singlepage App)
+  - `"auth-components-react-router"` - Pre-built auth UI for React(Vite+React Router) (Multipage App)
+  - `"auth-components-nextjs"` - Pre-built auth UI for Nextjs (SSR App)
+- `"storage-sdk"` - File storage operations
+- `"functions-sdk"` - Serverless functions invocation
+- `"ai-integration-sdk"` - AI chat and image generation
+- `"real-time"` - Real-time pub/sub (database + client events) via WebSockets
+- `"deployment"` - Deploy frontend applications via MCP tool
+
+These documentations are mostly for TypeScript SDK. For other languages, you can also use `fetch-sdk-docs` mcp tool to get specific documentation.
+
+### Use the InsForge `fetch-sdk-docs` MCP tool to get specific SDK documentation
+
+You can fetch sdk documentation using the `fetch-sdk-docs` MCP tool with specific feature type and language.
+
+Available feature types:
+- db - Database operations
+- storage - File storage operations
+- functions - Serverless functions invocation
+- auth - User authentication
+- ai - AI chat and image generation
+- realtime - Real-time pub/sub (database + client events) via WebSockets
+
+Available languages:
+- typescript - JavaScript/TypeScript SDK
+- swift - Swift SDK (for iOS, macOS, tvOS, and watchOS)
+- kotlin - Kotlin SDK (for Android and JVM applications)
+- rest-api - REST API
+
+## When to Use SDK vs MCP Tools
+
+### Always SDK for Application Logic:
+
+- Authentication (register, login, logout, profiles)
+- Database CRUD (select, insert, update, delete)
+- Storage operations (upload, download files)
+- AI operations (chat, image generation)
+- Serverless function invocation
+
+### Use MCP Tools for Infrastructure:
+
+- Project scaffolding (`download-template`) - Download starter templates with InsForge integration
+- Backend setup and metadata (`get-backend-metadata`)
+- Database schema management (`run-raw-sql`, `get-table-schema`)
+- Storage bucket creation (`create-bucket`, `list-buckets`, `delete-bucket`)
+- Serverless function deployment (`create-function`, `update-function`, `delete-function`)
+- Frontend deployment (`create-deployment`) - Deploy frontend apps to InsForge hosting
+
+## Important Notes
+
+- For auth: use `auth-sdk` for custom UI, or framework-specific components for pre-built UI
+- SDK returns `{data, error}` structure for all operations
+- Database inserts require array format: `[{...}]`
+- Serverless functions have single endpoint (no subpaths)
+- Storage: Upload files to buckets, store URLs in database
+- AI operations are OpenAI-compatible
+- **EXTRA IMPORTANT**: Use Tailwind CSS 3.4 (do not upgrade to v4). Lock these dependencies in `package.json`
+</file>
+
+<file path="docs/teoria/02-teoria.md">
+# 02 — Teoría previa: Seguridad en bases de datos desde cero
+
+> Objetivo: entender los conceptos que aparecen en las políticas de Flex antes de leer el código
+
+---
+
+## Antes de empezar: ¿por qué no basta con validar en el frontend?
+
+Cuando construyes una app web, la lógica que ves en el navegador (React, JavaScript) es **código público**. Cualquier persona puede abrir las herramientas de desarrollador de su navegador, ver tus peticiones a la API, copiar las claves que usas y lanzar peticiones directas a tu base de datos, saltándose por completo tu aplicación.
+
+```
+Sin protección en la base de datos:
+
+Usuario malicioso → abre DevTools → copia la API key → lanza petición directa → obtiene TODOS los datos
+                                                                                ↑
+                                                    tu validación de frontend no interviene aquí
+```
+
+La solución es mover la seguridad a un sitio donde el usuario no pueda llegar: **dentro del motor de la base de datos**. Eso es exactamente lo que hace PostgreSQL con Row Level Security.
+
+---
+
+## 1. Roles y autenticación en Supabase
+
+### ¿Qué es un rol en PostgreSQL?
+
+En PostgreSQL, un **rol** es una identidad con permisos específicos. Es como un tipo de usuario, pero más genérico: puede ser una persona, un servicio, o un proceso automatizado.
+
+Cuando alguien hace una petición a Supabase, llega con uno de estos tres roles predefinidos:
+
+| Rol | Quién lo usa | Para qué |
+|-----|-------------|----------|
+| `anon` | Usuarios no autenticados | Ver contenido público |
+| `authenticated` | Usuarios que han hecho login | Acceder a sus propios datos |
+| `service_role` | Servidores y Edge Functions | Operaciones del sistema (ignora RLS) |
+
+```
+Petición sin login → Supabase la marca como rol 'anon'
+Petición con token → Supabase la marca como rol 'authenticated'
+Petición con service_role key → Supabase la marca como rol 'service_role'
+```
+
+### Las funciones `auth.uid()` y `auth.role()`
+
+Supabase expone dos funciones de ayuda que puedes usar directamente en SQL:
+
+```sql
+-- Devuelve el UUID del usuario autenticado actualmente
+-- Si no hay usuario, devuelve null
+SELECT auth.uid();
+
+-- Devuelve el rol actual de la petición: 'anon', 'authenticated', 'service_role'
+SELECT auth.role();
+```
+
+Estas funciones leen el **token JWT** que acompaña a la petición HTTP. El JWT es un pequeño fichero cifrado que Supabase Auth genera al hacer login y que el navegador adjunta a todas las peticiones posteriores.
+
+```
+Usuario hace login
+       ↓
+Supabase devuelve un JWT con: { sub: "UUID-del-usuario", role: "authenticated", ... }
+       ↓
+El navegador guarda el JWT y lo manda en cada petición
+       ↓
+PostgreSQL lo lee con auth.uid() y auth.role()
+```
+
+### Ejercicio 1
+
+Razona sin ejecutar código: un usuario no autenticado hace una petición a Supabase. ¿Qué devuelven `auth.uid()` y `auth.role()` en ese caso?
+
+<details>
+<summary>Respuesta</summary>
+
+- `auth.uid()` devuelve `null` porque no hay ningún usuario identificado.
+- `auth.role()` devuelve `'anon'` porque Supabase asigna ese rol por defecto a las peticiones sin token de autenticación.
+
+Esto tiene consecuencias importantes: si escribes una política que comprueba `auth.uid() = cliente_id`, un usuario no autenticado nunca podrá pasar esa comprobación (porque `null = cliente_id` es `null`, que se evalúa como falso).
+
+</details>
+
+---
+
+## 2. Row Level Security (RLS)
+
+### ¿Qué es RLS?
+
+**Row Level Security** (seguridad a nivel de fila) es una característica de PostgreSQL que te permite definir reglas que determinan qué filas puede ver o modificar cada usuario.
+
+La clave está en "a nivel de fila": no es "este usuario puede acceder a la tabla `pedidos`" sino "este usuario puede ver **las filas de** `pedidos` **donde** `cliente_id = su UUID`".
+
+```
+Sin RLS:
+SELECT * FROM pedidos → devuelve los 500 pedidos de todos los clientes
+
+Con RLS (política activa):
+SELECT * FROM pedidos → devuelve solo los 3 pedidos de ESE cliente
+                        (PostgreSQL filtra automáticamente antes de responder)
+```
+
+### Activar RLS en una tabla
+
+RLS está **desactivado por defecto**. Hay que activarlo tabla a tabla con:
+
+```sql
+ALTER TABLE public.pedidos ENABLE ROW LEVEL SECURITY;
+```
+
+**Comportamiento importante:** una tabla con RLS activado pero sin ninguna política definida **deniega todo acceso**. Es un estado seguro por defecto: "si no hay regla que lo permita, está prohibido".
+
+```sql
+-- Activar RLS en varias tablas de golpe:
+ALTER TABLE public.perfiles     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pedidos      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.productos    ENABLE ROW LEVEL SECURITY;
+
+-- Con RLS activado y sin políticas:
+SELECT * FROM public.pedidos;
+-- Devuelve 0 filas (aunque haya datos). No es un error, simplemente no pasa la política.
+```
+
+### Ejercicio 2
+
+Tienes una tabla `facturas` con RLS activado y ninguna política definida. Un administrador conectado como `service_role` intenta hacer `SELECT * FROM facturas`. ¿Cuántas filas obtiene? ¿Y un usuario autenticado normal?
+
+<details>
+<summary>Respuesta</summary>
+
+- **`service_role`**: obtiene **todas las filas**. El rol `service_role` bypasea RLS completamente; las políticas no se evalúan para él.
+- **Usuario autenticado**: obtiene **0 filas**. Con RLS activo y sin políticas, ningún usuario normal puede leer nada. Que el usuario esté autenticado no es suficiente: necesita una política que lo permita explícitamente.
+
+</details>
+
+---
+
+## 3. Políticas (`CREATE POLICY`)
+
+### ¿Qué es una política?
+
+Una **política** es una regla que le dice a PostgreSQL: "permite esta operación si se cumple esta condición". Se define por tabla y por tipo de operación.
+
+```sql
+CREATE POLICY "nombre descriptivo"
+  ON nombre_tabla
+  FOR SELECT          -- qué operación: SELECT, INSERT, UPDATE, DELETE o ALL
+  USING ( condicion );  -- condición que debe cumplirse
+```
+
+El nombre entre comillas es solo descriptivo, pero es importante escribirlo bien porque aparecerá en los logs de error y en el panel de Supabase.
+
+### `USING` vs `WITH CHECK`
+
+Hay dos tipos de condición en una política:
+
+| Cláusula | Se evalúa en | Para qué sirve |
+|----------|-------------|----------------|
+| `USING` | SELECT, UPDATE, DELETE | Filtra qué filas **existentes** puede ver o tocar el usuario |
+| `WITH CHECK` | INSERT, UPDATE | Valida los **nuevos datos** que el usuario quiere escribir |
+
+```sql
+-- USING: "qué filas puede leer"
+-- Solo permite leer las filas donde el cliente_id coincide con el usuario actual
+CREATE POLICY "cliente: ver sus pedidos"
+  ON public.pedidos FOR SELECT
+  USING ( cliente_id = auth.uid() );
+
+-- WITH CHECK: "qué datos puede escribir"
+-- Solo permite insertar filas donde el cliente_id sea el propio usuario
+CREATE POLICY "cliente: crear pedidos"
+  ON public.pedidos FOR INSERT
+  WITH CHECK ( cliente_id = auth.uid() );
+```
+
+Para `UPDATE`, normalmente se usan **ambas**:
+- `USING`: qué filas puede actualizar (las que puede "ver")
+- `WITH CHECK`: cómo puede quedar la fila después de la actualización
+
+```sql
+-- Un cliente puede cancelar su reserva, pero solo si está en estado 'pendiente'
+-- y solo puede ponerla como 'cancelada' (no como 'pagada')
+CREATE POLICY "cliente: cancelar reserva pendiente"
+  ON public.reservas FOR UPDATE
+  USING (
+    cliente_id = auth.uid()
+    AND estado = 'pendiente'      -- solo puede tocar reservas pendientes
+  )
+  WITH CHECK (
+    cliente_id = auth.uid()
+    AND estado = 'cancelada'      -- solo puede dejarlas como canceladas
+  );
+```
+
+### Ejercicio: USING vs WITH CHECK
+
+Un banco quiere que los clientes puedan ver sus propias cuentas pero no puedan aumentar su propio saldo directamente. Escribe la política de UPDATE para la tabla `cuentas(id, usuario_id, saldo)`.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- El usuario puede actualizar su cuenta, pero el saldo en el resultado
+-- no puede ser mayor que el saldo actual (no puede "inventarse" dinero)
+CREATE POLICY "cliente: actualizar su cuenta"
+  ON public.cuentas FOR UPDATE
+  USING ( usuario_id = auth.uid() )
+  WITH CHECK (
+    usuario_id = auth.uid()
+    AND saldo <= (SELECT saldo FROM public.cuentas WHERE id = cuentas.id)
+  );
+```
+
+`USING` limita a qué filas puede acceder (solo las suyas). `WITH CHECK` valida que el resultado no sea fraudulento (el saldo no puede crecer). Un sistema real usaría transacciones y funciones para esto, pero la idea de separar "qué puedes tocar" de "cómo puede quedar" es exactamente el rol de `USING` vs `WITH CHECK`.
+
+</details>
+
+---
+
+### La cláusula `FOR ALL`
+
+En lugar de crear cuatro políticas separadas (SELECT, INSERT, UPDATE, DELETE), puedes usar `FOR ALL`:
+
+```sql
+-- El admin puede hacer cualquier operación en productos
+CREATE POLICY "admin: gestionar productos"
+  ON public.productos FOR ALL
+  USING ( public.mi_rol() = 'admin' )
+  WITH CHECK ( public.mi_rol() = 'admin' );
+```
+
+`FOR ALL` aplica la política a todas las operaciones. Se usa cuando el mismo usuario tiene permiso total sobre la tabla sin restricciones adicionales.
+
+### Ejercicio: diseñar políticas básicas
+
+Tienes una tabla `notas(id, autor_id, contenido, publica boolean)`. Define políticas para que:
+1. Cualquier usuario autenticado pueda leer las notas marcadas como públicas.
+2. El autor pueda leer, editar y borrar sus propias notas (aunque sean privadas).
+3. El autor no pueda cambiar `autor_id` al editar (una nota siempre pertenece a quien la creó).
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- 1. Leer notas públicas
+CREATE POLICY "autenticado: ver notas públicas"
+  ON public.notas FOR SELECT
+  USING (
+    auth.role() = 'authenticated'
+    AND publica = true
+  );
+
+-- 2. El autor lee y borra sus propias notas (incluso privadas)
+CREATE POLICY "autor: acceso total a sus notas"
+  ON public.notas FOR SELECT
+  USING ( autor_id = auth.uid() );
+
+CREATE POLICY "autor: borrar sus notas"
+  ON public.notas FOR DELETE
+  USING ( autor_id = auth.uid() );
+
+-- 3. El autor puede editar su nota, pero no cambiar quién es el autor
+CREATE POLICY "autor: editar sus notas"
+  ON public.notas FOR UPDATE
+  USING ( autor_id = auth.uid() )
+  WITH CHECK ( autor_id = auth.uid() );  -- el autor_id debe seguir siendo el suyo
+```
+
+`WITH CHECK ( autor_id = auth.uid() )` en el UPDATE garantiza que aunque el usuario modifique la fila, el `autor_id` resultante sigue siendo su propio UUID. Si intentara poner `autor_id = otro_uuid`, la condición fallaría y PostgreSQL rechazaría el UPDATE.
+
+</details>
+
+---
+
+## 4. La función helper de rol
+
+### El problema de repetir código en cada política
+
+En Flex hay tres roles de negocio: `cliente`, `staff` y `admin`. Están guardados en `public.perfiles.rol`. Para saber el rol del usuario actual, necesitaríamos este subquery en cada política:
+
+```sql
+-- Sin helper: repetir esto en cada política
+USING (
+  (SELECT rol FROM public.perfiles WHERE id = auth.uid()) = 'admin'
+)
+```
+
+Eso es verboso y propenso a errores. La solución es crear una **función helper** que encapsule ese subquery:
+
+```sql
+CREATE OR REPLACE FUNCTION public.mi_rol()
+RETURNS text
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+AS $$
+  SELECT rol FROM public.perfiles WHERE id = auth.uid()
+$$;
+```
+
+Ahora en cada política usamos simplemente `public.mi_rol()`:
+
+```sql
+-- Con helper: limpio y reutilizable
+USING ( public.mi_rol() = 'admin' )
+```
+
+### Por qué `SECURITY DEFINER` es necesario aquí
+
+Recuerda de la teoría anterior: `SECURITY DEFINER` hace que la función se ejecute con los permisos de quien la **creó** (el superadmin de la DB), no de quien la **llama**.
+
+¿Por qué es necesario aquí? Por el **problema de la recursión infinita**:
+
+```
+Un usuario llama a SELECT * FROM perfiles
+       ↓
+PostgreSQL evalúa la política de SELECT en 'perfiles'
+       ↓
+La política llama a mi_rol(), que hace SELECT FROM perfiles
+       ↓
+PostgreSQL evalúa la política de SELECT en 'perfiles'...
+       ↓
+¡Bucle infinito! ❌
+```
+
+Con `SECURITY DEFINER`, la función `mi_rol()` se ejecuta como el superadmin, que está exento de las políticas RLS. El ciclo se rompe:
+
+```
+Un usuario llama a SELECT * FROM perfiles
+       ↓
+PostgreSQL evalúa la política → llama a mi_rol()
+       ↓
+mi_rol() corre como superadmin → lee perfiles SIN evaluar políticas
+       ↓
+Devuelve el rol → la política decide si mostrar o no la fila ✓
+```
+
+### La keyword `STABLE`
+
+```sql
+STABLE
+```
+
+Le dice a PostgreSQL que esta función devuelve el mismo resultado si se llama varias veces dentro de la misma transacción con los mismos parámetros. PostgreSQL puede cachear el resultado en vez de ejecutar el subquery para cada fila de la tabla. En una tabla con 1000 pedidos, sin `STABLE` haría 1000 consultas a `perfiles`; con `STABLE`, hace una sola.
+
+### Ejercicio 3
+
+Tienes un sistema con roles `'editor'`, `'revisor'` y `'publicador'`. Escribe la función helper `public.mi_rol()` adaptada a este sistema (los roles siguen guardándose en la columna `rol` de la tabla `perfiles`). Luego escribe la política para que solo los publicadores puedan hacer `DELETE` en la tabla `articulos`.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- La función es idéntica; solo cambian los valores posibles del rol,
+-- que están controlados por el CHECK en la tabla perfiles, no aquí.
+CREATE OR REPLACE FUNCTION public.mi_rol()
+RETURNS text
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+AS $$
+  SELECT rol FROM public.perfiles WHERE id = auth.uid()
+$$;
+
+-- Política: solo publicadores pueden borrar artículos
+CREATE POLICY "publicador: borrar artículos"
+  ON public.articulos FOR DELETE
+  USING ( public.mi_rol() = 'publicador' );
+```
+
+La función `mi_rol()` no necesita saber qué valores de rol existen; simplemente devuelve lo que haya en la columna. La validación de valores válidos (`CHECK`) vive en la definición de la tabla `perfiles`.
+
+</details>
+
+---
+
+## 5. Subqueries en políticas: `EXISTS`
+
+### ¿Qué es `EXISTS`?
+
+`EXISTS` es un operador SQL que devuelve `true` si una subquery devuelve al menos una fila, y `false` si no devuelve ninguna.
+
+```sql
+-- ¿Existe algún pedido activo de ese cliente?
+SELECT EXISTS (
+  SELECT 1 FROM public.pedidos
+  WHERE pedidos.cliente_id = auth.uid()
+    AND pedidos.estado = 'activo'
+);
+-- Devuelve: true o false
+```
+
+`SELECT 1` es un truco habitual: no necesitamos los datos de la fila, solo saber si existe. Seleccionar el literal `1` es más eficiente que `SELECT *`.
+
+### Por qué se necesita `EXISTS` en las políticas de `pedido_items`
+
+Un `pedido_item` pertenece a un pedido. Pero la columna `cliente_id` está en `pedidos`, no en `pedido_items`. Para saber si un cliente puede ver un item concreto, tenemos que mirar si ese item pertenece a un pedido suyo:
+
+```sql
+-- El cliente ve los ítems de SUS pedidos
+CREATE POLICY "cliente: ver items de sus pedidos"
+  ON public.pedido_items FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.pedidos
+      WHERE pedidos.id = pedido_items.pedido_id   -- el pedido de este item
+        AND pedidos.cliente_id = auth.uid()        -- es un pedido del cliente actual
+    )
+  );
+```
+
+En español: "permite leer este item si existe algún pedido que (a) tiene el mismo ID que el pedido de este item, y (b) pertenece al usuario actual".
+
+### Ejercicio: `EXISTS` en políticas
+
+Tienes las tablas `proyectos(id, nombre)` y `tareas(id, proyecto_id, titulo, completada)`. Los usuarios pueden pertenecer a proyectos a través de la tabla `miembros(usuario_id, proyecto_id)`.
+
+Escribe la política para que un usuario solo pueda ver las tareas de proyectos de los que es miembro.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE POLICY "miembro: ver tareas de sus proyectos"
+  ON public.tareas FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.miembros
+      WHERE miembros.proyecto_id = tareas.proyecto_id  -- mismo proyecto que la tarea
+        AND miembros.usuario_id = auth.uid()            -- y el usuario es miembro
+    )
+  );
+```
+
+Para cada fila de `tareas` que se intenta leer, PostgreSQL comprueba si existe alguna fila en `miembros` donde coincidan el proyecto y el usuario actual. Si existe, muestra la tarea. Si no, la oculta.
+
+</details>
+
+---
+
+## 6. El `service_role` y el bypass de RLS
+
+### ¿Qué es la `service_role key`?
+
+Supabase proporciona dos tipos de claves API:
+
+| Clave | Rol asignado | Ignora RLS |
+|-------|-------------|------------|
+| `anon key` | `anon` | No |
+| `service_role key` | `service_role` | **Sí** |
+
+El cliente del navegador usa la `anon key`. Las peticiones autenticadas del usuario también viajan con la `anon key`, pero acompañadas del JWT que identifica al usuario (por eso Supabase les asigna el rol `authenticated`).
+
+La `service_role key` es exclusiva del **servidor**: Edge Functions, scripts de migración, webhooks. Nunca debe enviarse al navegador porque permite hacer cualquier operación sin restricciones.
+
+### Cuándo y por qué bypasear RLS
+
+El caso más claro en Flex es el webhook de Stripe:
+
+```
+Stripe confirma el pago
+       ↓
+Llama a la Edge Function (en el servidor)
+       ↓
+La Edge Function usa service_role key
+       ↓
+UPDATE reservas SET estado = 'pagada' WHERE id = ?
+(RLS ignorado → correcto: el sistema, no el usuario, hace este cambio)
+```
+
+Tiene sentido porque Stripe no es un usuario de la app. Es un sistema externo que actúa en nombre del sistema. Si la Edge Function usara la `anon key`, necesitaría una política que permitiera actualizar reservas desde fuera, lo que abriría una brecha de seguridad.
+
+### Ejercicio 4
+
+Razona: tienes una tarea programada (cron job) que cada noche borra los pedidos con estado `'abandonado'` de más de 30 días. ¿Debería usar la `anon key` o la `service_role key`? ¿Qué problemas tendría usar la equivocada?
+
+<details>
+<summary>Respuesta</summary>
+
+Debe usar la **`service_role key`** porque:
+1. Es un proceso del sistema, no un usuario.
+2. Necesita borrar pedidos de **todos** los clientes, no solo los de uno.
+3. Con la `anon key`, el rol sería `anon` y las políticas RLS bloquearían la operación (no hay ninguna política que permita borrar pedidos a usuarios anónimos).
+
+Si usara la `anon key`:
+- Con RLS activo y sin política de DELETE para `anon`, el DELETE devolvería 0 filas borradas sin error (RLS filtra silenciosamente, no lanza un error de permisos).
+- El cron job parecería funcionar pero no haría nada.
+
+Si expusieras la `service_role key` al cliente (frontend):
+- Cualquier usuario podría borrar pedidos de otros, leer todos los datos, etc.
+- Todo el sistema de RLS quedaría inutilizado.
+
+</details>
+
+---
+
+## 7. Cómo probar que las políticas funcionan
+
+### Simular un usuario en el SQL Editor
+
+Supabase permite simular una petición de un usuario concreto desde el SQL Editor usando `set`:
+
+```sql
+-- Simular ser el usuario con ese UUID
+SET request.jwt.claims = '{"sub":"UUID-del-usuario","role":"authenticated"}';
+
+-- A partir de aquí, auth.uid() devuelve ese UUID y auth.role() = 'authenticated'
+SELECT * FROM public.pedidos;
+-- Debería devolver SOLO los pedidos de ese usuario
+```
+
+Esto modifica la sesión actual del SQL Editor para que PostgreSQL crea que la petición viene de ese usuario. Muy útil para depurar políticas sin necesidad de hacer login desde el frontend.
+
+### Comprobar que un usuario NO puede hacer algo
+
+```sql
+SET request.jwt.claims = '{"sub":"UUID-del-cliente","role":"authenticated"}';
+
+-- Un cliente intentando ver todos los pedidos (debería devolver solo los suyos):
+SELECT * FROM public.pedidos;
+
+-- Un cliente intentando borrar un pedido (debería devolver 0 filas borradas):
+DELETE FROM public.pedidos WHERE id = 1;
+
+-- Si la política funciona correctamente, el DELETE no borra nada
+-- (RLS lo filtra silenciosamente)
+```
+
+### Ejercicio: probar políticas
+
+Escribe las queries SQL que usarías para verificar que la política "cliente: cancelar reserva pendiente" funciona correctamente. Debes comprobar dos casos: uno que debería tener éxito y uno que debería fallar.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- Primero simular ser el cliente
+SET request.jwt.claims = '{"sub":"UUID-del-cliente","role":"authenticated"}';
+
+-- CASO 1: debería FUNCIONAR
+-- Cambiar estado de 'pendiente' a 'cancelada' en una reserva propia
+UPDATE public.reservas
+SET estado = 'cancelada'
+WHERE id = <id-reserva-pendiente-del-cliente>;
+-- Resultado esperado: UPDATE 1 (una fila actualizada)
+
+-- CASO 2: debería FALLAR (devolver 0 filas actualizadas)
+-- Intentar cambiar una reserva ya pagada (no está en estado 'pendiente')
+UPDATE public.reservas
+SET estado = 'cancelada'
+WHERE id = <id-reserva-pagada-del-cliente>;
+-- Resultado esperado: UPDATE 0 (USING bloquea porque estado != 'pendiente')
+
+-- CASO 3: debería FALLAR
+-- Intentar poner el estado como 'pagada' (solo puede poner 'cancelada')
+UPDATE public.reservas
+SET estado = 'pagada'
+WHERE id = <id-reserva-pendiente-del-cliente>;
+-- Resultado esperado: ERROR de política (WITH CHECK falla porque estado != 'cancelada')
+
+-- CASO 4: debería FALLAR
+-- Intentar cancelar la reserva de otro cliente
+UPDATE public.reservas
+SET estado = 'cancelada'
+WHERE id = <id-reserva-de-otro-cliente>;
+-- Resultado esperado: UPDATE 0 (USING bloquea porque cliente_id != auth.uid())
+```
+
+Los casos 2 y 4 devuelven `UPDATE 0` (silencioso) porque RLS filtra las filas antes de intentar el UPDATE. El caso 3 devuelve un error porque la fila pasa el `USING` pero falla el `WITH CHECK`.
+
+</details>
+
+---
+
+## 8. Múltiples políticas en la misma tabla
+
+### Las políticas se combinan con OR
+
+Si una tabla tiene varias políticas para el mismo tipo de operación, PostgreSQL aplica **todas** y devuelve las filas que pasen **al menos una**. Es un OR lógico.
+
+```sql
+-- Política 1: un cliente ve sus pedidos
+CREATE POLICY "cliente: ver sus pedidos"
+  ON public.pedidos FOR SELECT
+  USING ( cliente_id = auth.uid() AND public.mi_rol() = 'cliente' );
+
+-- Política 2: el staff ve todos los pedidos
+CREATE POLICY "staff: ver todos los pedidos"
+  ON public.pedidos FOR SELECT
+  USING ( public.mi_rol() IN ('staff', 'admin') );
+
+-- Si el usuario es 'staff', pasa la política 2 → ve todos los pedidos
+-- Si el usuario es 'cliente', solo pasa la política 1 → ve solo los suyos
+-- Si el usuario es 'anon', no pasa ninguna → ve 0 filas
+```
+
+Esto es importante: **no hace falta elegir entre políticas**. Puedes tener tantas como necesites, cada una para un tipo de usuario diferente.
+
+### Ejercicio 5
+
+Tienes la tabla `documentos(id, autor_id, contenido, borrador boolean)`. Escribe las políticas para que:
+- Un autor vea todos sus documentos (borradores y publicados).
+- Cualquier usuario autenticado vea los documentos **no borrador** (publicados) de cualquier autor.
+- Solo el autor pueda editar sus propios documentos.
+
+Luego responde: si el autor hace `SELECT * FROM documentos`, ¿cuántas políticas de SELECT se evalúan para él?
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- Política 1: un autor ve todos sus documentos
+CREATE POLICY "autor: ver sus documentos"
+  ON public.documentos FOR SELECT
+  USING ( autor_id = auth.uid() );
+
+-- Política 2: todos los autenticados ven documentos publicados
+CREATE POLICY "autenticado: ver publicados"
+  ON public.documentos FOR SELECT
+  USING (
+    auth.role() = 'authenticated'
+    AND borrador = false
+  );
+
+-- Política 3: solo el autor puede editar sus documentos
+CREATE POLICY "autor: editar sus documentos"
+  ON public.documentos FOR UPDATE
+  USING ( autor_id = auth.uid() )
+  WITH CHECK ( autor_id = auth.uid() );
+```
+
+Cuando el autor hace `SELECT * FROM documentos`, PostgreSQL evalúa **ambas políticas de SELECT** (la 1 y la 2). Una fila aparece en el resultado si pasa al menos una. Para sus propios documentos, pasa la política 1. Para documentos publicados de otros, pasa la política 2. El resultado: el autor ve todos sus documentos Y los documentos publicados de otros autores.
+
+</details>
+
+---
+
+## Resumen de conceptos
+
+| Concepto | En una frase |
+|---|---|
+| **RLS** | Seguridad a nivel de fila: PostgreSQL filtra qué datos puede ver cada usuario |
+| **`ENABLE ROW LEVEL SECURITY`** | Activa RLS en una tabla; sin políticas, deniega todo |
+| **`CREATE POLICY`** | Define una regla de acceso para una tabla y operación concretas |
+| **`USING`** | Condición sobre filas existentes (SELECT, UPDATE, DELETE) |
+| **`WITH CHECK`** | Condición sobre los datos nuevos a escribir (INSERT, UPDATE) |
+| **`FOR ALL`** | La política aplica a SELECT, INSERT, UPDATE y DELETE |
+| **`auth.uid()`** | UUID del usuario autenticado actualmente (null si no hay ninguno) |
+| **`auth.role()`** | Rol de la petición actual: `anon`, `authenticated` o `service_role` |
+| **`service_role`** | Rol del sistema; bypasea RLS (nunca exponer al cliente) |
+| **`SECURITY DEFINER`** | La función corre con permisos del creador, evita recursión en políticas |
+| **`STABLE`** | El resultado no cambia en la transacción; PostgreSQL lo puede cachear |
+| **`EXISTS`** | True si la subquery devuelve al menos una fila |
+| **Múltiples políticas** | Se combinan con OR: una fila pasa si cumple al menos una política |
+
+---
+
+## Ejercicio final integrador
+
+Diseña el sistema de políticas RLS para una plataforma de cursos online con estas reglas:
+
+**Tablas:** `cursos(id, instructor_id, titulo, publicado boolean)`, `matriculas(id, alumno_id, curso_id, completado boolean)`, `lecciones(id, curso_id, titulo, contenido)`.
+
+**Roles de negocio** (almacenados en `perfiles.rol`): `'alumno'`, `'instructor'`, `'admin'`.
+
+**Reglas:**
+1. Cualquier usuario autenticado puede ver los cursos publicados.
+2. Un instructor puede ver y editar **solo sus propios cursos** (publicados o no).
+3. Un alumno puede ver las lecciones de los cursos en los que está matriculado.
+4. Un alumno puede matricularse en un curso (INSERT en `matriculas`), pero solo con su propio `alumno_id`.
+5. Un alumno puede marcar su propia matrícula como completada (UPDATE), pero no puede cambiar `alumno_id` ni `curso_id`.
+6. El admin tiene acceso total a todo.
+
+Escribe también la función helper `public.mi_rol()` y activa RLS en las tres tablas.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+-- Función helper
+CREATE OR REPLACE FUNCTION public.mi_rol()
+RETURNS text
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+AS $$
+  SELECT rol FROM public.perfiles WHERE id = auth.uid()
+$$;
+
+-- Activar RLS
+ALTER TABLE public.cursos      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.matriculas  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.lecciones   ENABLE ROW LEVEL SECURITY;
+
+-- ─── CURSOS ───────────────────────────────────────────────
+
+-- 1. Cualquier autenticado ve cursos publicados
+CREATE POLICY "autenticado: ver cursos publicados"
+  ON public.cursos FOR SELECT
+  USING (
+    auth.role() = 'authenticated'
+    AND publicado = true
+  );
+
+-- 2a. Un instructor ve todos sus cursos (publicados o no)
+CREATE POLICY "instructor: ver sus cursos"
+  ON public.cursos FOR SELECT
+  USING (
+    instructor_id = auth.uid()
+    AND public.mi_rol() = 'instructor'
+  );
+
+-- 2b. Un instructor edita solo sus cursos
+CREATE POLICY "instructor: editar sus cursos"
+  ON public.cursos FOR UPDATE
+  USING (
+    instructor_id = auth.uid()
+    AND public.mi_rol() = 'instructor'
+  )
+  WITH CHECK (
+    instructor_id = auth.uid()
+    AND public.mi_rol() = 'instructor'
+  );
+
+-- 6. Admin tiene acceso total a cursos
+CREATE POLICY "admin: gestionar cursos"
+  ON public.cursos FOR ALL
+  USING ( public.mi_rol() = 'admin' )
+  WITH CHECK ( public.mi_rol() = 'admin' );
+
+-- ─── LECCIONES ────────────────────────────────────────────
+
+-- 3. Un alumno ve las lecciones de cursos en los que está matriculado
+CREATE POLICY "alumno: ver lecciones de sus cursos"
+  ON public.lecciones FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.matriculas
+      WHERE matriculas.curso_id = lecciones.curso_id
+        AND matriculas.alumno_id = auth.uid()
+    )
+  );
+
+-- El instructor ve las lecciones de sus propios cursos
+CREATE POLICY "instructor: ver lecciones de sus cursos"
+  ON public.lecciones FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.cursos
+      WHERE cursos.id = lecciones.curso_id
+        AND cursos.instructor_id = auth.uid()
+    )
+  );
+
+-- Admin: acceso total
+CREATE POLICY "admin: gestionar lecciones"
+  ON public.lecciones FOR ALL
+  USING ( public.mi_rol() = 'admin' )
+  WITH CHECK ( public.mi_rol() = 'admin' );
+
+-- ─── MATRÍCULAS ───────────────────────────────────────────
+
+-- 4. Un alumno puede matricularse (solo con su propio alumno_id)
+CREATE POLICY "alumno: crear matricula"
+  ON public.matriculas FOR INSERT
+  WITH CHECK (
+    alumno_id = auth.uid()
+    AND public.mi_rol() = 'alumno'
+  );
+
+-- Un alumno ve sus propias matrículas
+CREATE POLICY "alumno: ver sus matriculas"
+  ON public.matriculas FOR SELECT
+  USING ( alumno_id = auth.uid() );
+
+-- 5. Un alumno puede marcar su matrícula como completada
+--    pero no puede cambiar alumno_id ni curso_id
+CREATE POLICY "alumno: completar su matricula"
+  ON public.matriculas FOR UPDATE
+  USING ( alumno_id = auth.uid() )
+  WITH CHECK (
+    alumno_id = auth.uid()            -- no puede cambiar de quién es
+    AND curso_id = (                  -- no puede cambiar el curso
+      SELECT curso_id FROM public.matriculas WHERE id = matriculas.id
+    )
+  );
+
+-- Admin: acceso total
+CREATE POLICY "admin: gestionar matriculas"
+  ON public.matriculas FOR ALL
+  USING ( public.mi_rol() = 'admin' )
+  WITH CHECK ( public.mi_rol() = 'admin' );
+```
+
+</details>
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 01 — Teoría previa: PostgreSQL](./01-teoria.md) | [02 — Seguridad con RLS →](../02-seguridad-rls.md) |
+</file>
+
+<file path="supabase/migrations/20260518105257_esquema_inicial.sql">
+create extension if not exists btree_gist;
+
+create table public.perfiles (
+  id         uuid primary key references auth.users(id) on delete cascade,
+  nombre     text,
+  rol        text not null default 'cliente'
+             check (rol in ('cliente', 'staff', 'admin')),
+  avatar_url text,
+  creado_en  timestamptz not null default now()
+);
+
+create or replace function public.handle_new_user()
+  returns trigger
+  language plpgsql
+  security definer
+  as $$
+  begin
+  insert into public.perfiles (id, nombre)
+  values (new.id, new.raw_user_meta_data->>'full_name');
+  return new;
+end;
+$$;
+
+create trigger on_auth_user_created  
+  after insert                         
+  on auth.users                        
+  for each row                         
+  execute procedure public.handle_new_user();
+
+create table public.mesas (
+  id        serial primary key,
+  numero    int not null,
+  piso      smallint not null check (piso in (1, 2)),
+  capacidad int not null default 4,
+  activa    boolean not null default true,
+  unique (numero, piso)
+);
+
+insert into public.mesas (numero, piso, capacidad) values
+  (1,1,4),(2,1,4),(3,1,6),(4,1,4),(5,1,2),
+  (6,1,4),(7,1,4),(8,1,6),(9,1,4),(10,1,2),
+  (1,2,4),(2,2,4),(3,2,4),(4,2,4),(5,2,6),(6,2,6);
+
+create table public.productos (
+  id          serial primary key,
+  nombre      text not null,
+  descripcion text,
+  precio      numeric(8,2) not null,
+  categoria   text not null default 'bebida'
+              check (categoria in ('bebida', 'comida', 'pack')),
+  imagen_url  text,
+  disponible  boolean not null default true,
+  creado_en   timestamptz not null default now()
+);
+
+create table public.pedidos (
+  id          bigserial primary key,
+  mesa_id     int references public.mesas(id),
+  cliente_id  uuid references public.perfiles(id),
+  estado      text not null default 'pendiente'
+              check (estado in ('pendiente','en_barra','listo','entregado','cancelado')),
+  total       numeric(8,2),
+  creado_en   timestamptz not null default now(),
+  actualizado timestamptz not null default now()
+);
+
+create table public.pedido_items (
+  id          bigserial primary key,
+  pedido_id   bigint not null references public.pedidos(id) on delete cascade,
+  producto_id int not null references public.productos(id),
+  cantidad    int not null default 1 check (cantidad > 0),
+  precio_unit numeric(8,2) not null
+);
+
+create table public.salas_vip (
+  id          serial primary key,
+  nombre      text not null,
+  descripcion text,
+  capacidad   int not null default 10,
+  precio_hora numeric(8,2) not null,
+  imagen_url  text,
+  activa      boolean not null default true
+);
+
+insert into public.salas_vip (nombre, descripcion, capacidad, precio_hora) values
+  ('Sala Roja',  'Ambiente íntimo con equipo de sonido Marshall',  8, 80.00),
+  ('Sala Negra', 'Escenario propio + luces de discoteca',          15, 120.00),
+  ('Sala Gold',  'Suite VIP con servicio de botella incluido',     6,  150.00);
+
+  create table public.reservas (
+  id              bigserial primary key,
+  sala_id         int not null references public.salas_vip(id),
+  cliente_id      uuid not null references public.perfiles(id),
+  inicio          timestamptz not null,
+  fin             timestamptz not null,
+  estado          text not null default 'pendiente'
+                  check (estado in ('pendiente','pagada','cancelada','completada')),
+  stripe_session  text,
+  stripe_payment  text,
+  qr_token        text unique,
+  total           numeric(8,2) not null,
+  creado_en       timestamptz not null default now(),
+
+  constraint sin_solapamiento exclude using gist (
+    sala_id with =,
+    tstzrange(inicio, fin) with &&
+  ) where (estado not in ('cancelada'))
+);
+</file>
+
+<file path="supabase/migrations/20260518110300_politicas_rls.sql">
+
+</file>
+
+<file path="supabase/snippets/Untitled query 351.sql">
+CREATE TABLE productos3 (
+  id          serial PRIMARY KEY,
+  nombre      text NOT NULL,
+  stock       int NOT NULL DEFAULT 0,
+  actualizado timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE movimientos_stock3 (
+  id          serial PRIMARY KEY,
+  producto_id int REFERENCES productos(id),
+  cambio      int NOT NULL,        -- positivo = entrada, negativo = salida
+  motivo      text,
+  creado_en   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE OR REPLACE FUNCTION actualizar_stock_productos()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE productos
+  SET
+    stock       = stock + NEW.cambio,
+    actualizado = now()
+  WHERE id = NEW.producto_id;
+   RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_actualizar_movimientos_stock
+  AFTER INSERT
+  ON movimientos_stock3
+  FOR EACH ROW
+  EXECUTE FUNCTION actualizar_stock_productos();
+
+  -- Probar:
+INSERT INTO productos (nombre, stock) VALUES ('Cerveza', 100);
+INSERT INTO movimientos_stock (producto_id, cambio, motivo) VALUES (1, -5, 'venta');
+SELECT stock FROM productos WHERE id = 1;  -- 95
+</file>
+
+<file path="supabase/snippets/Untitled query 556.sql">
+-- CREATE TABLE tareas (
+--   id serial primary key,
+--   titulo text NOT NULL,
+--   completada boolean default false,
+--   prioridad text default 'normal',
+--   creado_en timestamp
+-- )
+
+insert into tareas (titulo, prioridad) values ('Tercera tarea', 'alta')
+</file>
+
+<file path="supabase/snippets/Untitled query 611.sql">
+insert into storage.buckets (id, name, public) values
+  ('productos', 'productos', true),
+  ('salas-vip', 'salas-vip', true);
+</file>
+
+<file path="supabase/snippets/Untitled query 652.sql">
+CREATE POLICY *Un usuario autenticated solo puede leer su perfil*
+ON public.perfiles
+FOR select
+using(perfiles.id - auth.uid ())
+
+
+
+SET request.jwt.claims = '{"sub":"06c7cdc5-0806-43ae-977f-fd855f099949","role":"authenticated"}';
+Select * from perfiles;
+</file>
+
+<file path=".env.local">
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:57321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+</file>
+
+<file path="docs/teoria/01-teoria.md">
+# 01 — Teoría previa: PostgreSQL desde cero
+
+> Objetivo: entender los conceptos que aparecen en el esquema de Flex antes de leer el código
+
+---
+
+## Antes de empezar: ¿qué es PostgreSQL?
+
+Una base de datos es un programa que guarda información de forma organizada. PostgreSQL es uno de los más potentes del mundo y es el que usa Supabase por debajo.
+
+En PostgreSQL la información se guarda en **tablas**, igual que hojas de cálculo:
+
+```
+Tabla: alumnos
+┌────┬──────────┬──────┐
+│ id │ nombre   │ edad │
+├────┼──────────┼──────┤
+│  1 │ María    │  17  │
+│  2 │ Carlos   │  16  │
+│  3 │ Lucía    │  17  │
+└────┴──────────┴──────┘
+```
+
+Cada fila es un registro. Cada columna es un campo. Con SQL podemos crear tablas, insertar datos, consultarlos, modificarlos y borrarlos.
+
+---
+
+## 1. Extensiones
+
+### ¿Qué es una extensión?
+
+PostgreSQL viene con muchas funcionalidades, pero no todas están activas por defecto para no consumir recursos innecesarios. Las **extensiones** son módulos opcionales que puedes activar cuando los necesitas.
+
+Es como instalar un plugin en un programa: el programa base funciona sin él, pero con él tienes capacidades extra.
+
+```sql
+-- Activar una extensión
+CREATE EXTENSION IF NOT EXISTS nombre_extension;
+
+-- IF NOT EXISTS significa "solo instálala si aún no está instalada"
+-- Si ya estaba, no da error. Sin esa cláusula, daría error la segunda vez.
+```
+
+### La extensión `btree_gist`
+
+PostgreSQL tiene distintos tipos de índices para buscar datos rápidamente. El más común es el **B-tree**, que funciona bien con números, texto y fechas (comparaciones de igualdad y orden).
+
+El índice **GiST** (*Generalized Search Tree*) está diseñado para tipos de datos más complejos: rangos de tiempo, formas geométricas, arrays…
+
+El problema es que normalmente no pueden combinarse en un mismo índice. `btree_gist` es la extensión que lo permite: añade soporte para mezclar columnas normales (enteros, texto) con columnas de rango dentro del mismo índice GiST.
+
+Lo necesitaremos cuando queramos evitar reservas solapadas: tenemos que comparar un entero (`sala_id`) junto a un rango de fechas en la misma operación.
+
+```sql
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+```
+
+### Ejercicio 1
+
+Investiga (o razona): ¿qué pasaría si intentas usar `CREATE EXTENSION btree_gist` cuando ya está instalada y no pones `IF NOT EXISTS`?
+
+<details>
+<summary>Respuesta</summary>
+
+PostgreSQL devolvería un error: `ERROR: extension "btree_gist" already exists`. Con `IF NOT EXISTS` simplemente no hace nada y continúa sin error. Es buena práctica usarlo siempre en migraciones para que sean repetibles.
+
+</details>
+
+---
+
+## 2. Restricciones (constraints)
+
+Una **restricción** es una regla que la base de datos aplica automáticamente para garantizar que los datos son válidos. Si alguien intenta insertar o modificar un dato que rompe la regla, PostgreSQL devuelve un error y rechaza la operación.
+
+Son la primera línea de defensa de la integridad de los datos: no dependen del frontend ni del backend, viven en la propia base de datos.
+
+### 2.1 NOT NULL
+
+Indica que una columna no puede quedar vacía. Si intentas insertar una fila sin ese valor, falla.
+
+```sql
+CREATE TABLE productos (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL,   -- obligatorio
+  precio numeric(8,2)     -- opcional (puede ser null)
+);
+
+-- Esto funciona:
+INSERT INTO productos (nombre, precio) VALUES ('Agua', 1.50);
+
+-- Esto falla: nombre es NOT NULL
+INSERT INTO productos (precio) VALUES (1.50);
+-- ERROR: null value in column "nombre" violates not-null constraint
+```
+
+### Ejercicio: NOT NULL
+
+Tienes que crear la tabla `reservas_hotel` con las columnas: `id`, `nombre_huesped`, `email`, `fecha_entrada`, `fecha_salida`, `notas`.
+
+Decide qué columnas deben ser `NOT NULL` y justifica por qué las demás pueden ser nulas.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE reservas_hotel (
+  id             serial PRIMARY KEY,
+  nombre_huesped text NOT NULL,       -- sin nombre no sabemos a quién asignar la habitación
+  email          text NOT NULL,       -- necesario para enviar la confirmación
+  fecha_entrada  timestamptz NOT NULL, -- sin fecha no hay reserva
+  fecha_salida   timestamptz NOT NULL, -- ídem
+  notas          text                  -- opcional: peticiones especiales, alergias... puede ser null
+);
+```
+
+`notas` puede ser nula porque es información adicional opcional. Las demás son imprescindibles para que la reserva tenga sentido.
+
+</details>
+
+---
+
+### 2.2 DEFAULT
+
+Si no especificas un valor al insertar, PostgreSQL usa el valor por defecto.
+
+```sql
+CREATE TABLE mensajes (
+  id         serial PRIMARY KEY,
+  contenido  text NOT NULL,
+  leido      boolean NOT NULL DEFAULT false,
+  creado_en  timestamptz NOT NULL DEFAULT now()
+);
+
+-- Al insertar solo el contenido, 'leido' será false y 'creado_en' la hora actual:
+INSERT INTO mensajes (contenido) VALUES ('Hola');
+```
+
+### Ejercicio: DEFAULT
+
+Crea la tabla `tareas` con: `id`, `titulo` (obligatorio), `completada` (false por defecto), `prioridad` (`'normal'` por defecto), `creado_en` (fecha y hora actuales por defecto).
+
+Luego inserta una tarea llamada `'Estudiar triggers'` sin especificar ningún otro campo y verifica que los defaults se aplicaron.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE tareas (
+  id          serial PRIMARY KEY,
+  titulo      text NOT NULL,
+  completada  boolean NOT NULL DEFAULT false,
+  prioridad   text NOT NULL DEFAULT 'normal',
+  creado_en   timestamptz NOT NULL DEFAULT now()
+);
+
+INSERT INTO tareas (titulo) VALUES ('Estudiar triggers');
+
+SELECT * FROM tareas;
+-- id: 1, titulo: 'Estudiar triggers', completada: false, prioridad: 'normal', creado_en: [hora actual]
+```
+
+Solo hemos especificado `titulo`. PostgreSQL ha rellenado el resto con los valores por defecto.
+
+</details>
+
+---
+
+### 2.3 CHECK
+
+Define una condición que el valor debe cumplir. Si la condición es falsa, la inserción o actualización falla.
+
+```sql
+CREATE TABLE empleados (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL,
+  edad   int CHECK (edad >= 16 AND edad <= 70),
+  turno  text CHECK (turno IN ('mañana', 'tarde', 'noche'))
+);
+
+-- Esto falla:
+INSERT INTO empleados (nombre, edad, turno) VALUES ('Ana', 14, 'mañana');
+-- ERROR: new row violates check constraint
+
+-- Esto también falla:
+INSERT INTO empleados (nombre, edad, turno) VALUES ('Ana', 25, 'madrugada');
+-- ERROR: new row violates check constraint
+```
+
+### Ejercicio: CHECK
+
+Crea la tabla `tickets_concierto` donde:
+- El precio debe ser mayor que 0.
+- La categoría solo puede ser `'general'`, `'vip'` o `'backstage'`.
+- La cantidad debe estar entre 1 y 10.
+
+Luego intenta insertar un ticket con precio `-5` y explica qué error daría.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE tickets_concierto (
+  id        serial PRIMARY KEY,
+  precio    numeric(8,2) NOT NULL CHECK (precio > 0),
+  categoria text NOT NULL CHECK (categoria IN ('general', 'vip', 'backstage')),
+  cantidad  int NOT NULL DEFAULT 1 CHECK (cantidad BETWEEN 1 AND 10)
+);
+
+-- Esto falla:
+INSERT INTO tickets_concierto (precio, categoria) VALUES (-5, 'vip');
+-- ERROR: new row for relation "tickets_concierto" violates check constraint "tickets_concierto_precio_check"
+
+-- Esto también falla:
+INSERT INTO tickets_concierto (precio, categoria, cantidad) VALUES (50, 'platinum', 1);
+-- ERROR: violates check constraint "tickets_concierto_categoria_check"
+```
+
+La restricción `CHECK` la evalúa PostgreSQL antes de guardar la fila. No importa desde dónde venga el dato.
+
+</details>
+
+---
+
+### 2.4 UNIQUE
+
+Garantiza que no haya dos filas con el mismo valor en esa columna (o combinación de columnas).
+
+```sql
+CREATE TABLE usuarios (
+  id    serial PRIMARY KEY,
+  email text NOT NULL UNIQUE,   -- no puede repetirse
+  nombre text
+);
+
+-- Si ya existe un usuario con ese email, falla:
+INSERT INTO usuarios (email, nombre) VALUES ('ana@test.com', 'Ana');
+INSERT INTO usuarios (email, nombre) VALUES ('ana@test.com', 'Otra Ana');
+-- ERROR: duplicate key value violates unique constraint
+```
+
+También puedes poner `UNIQUE` sobre **combinaciones de columnas**. El valor individual puede repetirse, pero no la combinación:
+
+```sql
+CREATE TABLE asientos (
+  id   serial PRIMARY KEY,
+  fila int NOT NULL,
+  col  int NOT NULL,
+  UNIQUE (fila, col)   -- no puede haber dos asientos en la misma fila y columna
+);
+
+-- Esto está bien (misma fila, distinta columna):
+INSERT INTO asientos (fila, col) VALUES (3, 1);
+INSERT INTO asientos (fila, col) VALUES (3, 2);
+
+-- Esto falla (fila Y columna iguales):
+INSERT INTO asientos (fila, col) VALUES (3, 1);
+-- ERROR: duplicate key value violates unique constraint
+```
+
+### Ejercicio: UNIQUE
+
+Un parking tiene plazas numeradas (1, 2, 3…) por planta (`'A'`, `'B'`, `'C'`). Puede existir la plaza 5 de la planta A y la plaza 5 de la planta B, pero no dos plazas 5 en la planta A.
+
+Crea la tabla `plazas_parking` que garantice esto a nivel de base de datos.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE plazas_parking (
+  id      serial PRIMARY KEY,
+  numero  int NOT NULL,
+  planta  text NOT NULL CHECK (planta IN ('A', 'B', 'C')),
+  ocupada boolean NOT NULL DEFAULT false,
+  UNIQUE (numero, planta)   -- la combinación número+planta no puede repetirse
+);
+
+-- Esto está bien (misma planta A, distinto número):
+INSERT INTO plazas_parking (numero, planta) VALUES (1, 'A');
+INSERT INTO plazas_parking (numero, planta) VALUES (2, 'A');
+
+-- Esto también está bien (mismo número, distinta planta):
+INSERT INTO plazas_parking (numero, planta) VALUES (1, 'B');
+
+-- Esto falla (número Y planta iguales):
+INSERT INTO plazas_parking (numero, planta) VALUES (1, 'A');
+-- ERROR: duplicate key value violates unique constraint
+```
+
+</details>
+
+---
+
+### 2.5 PRIMARY KEY
+
+Es una combinación de `NOT NULL` + `UNIQUE`. Identifica de forma única cada fila de la tabla. Cada tabla debe tener exactamente una clave primaria.
+
+```sql
+CREATE TABLE libros (
+  id     serial PRIMARY KEY,   -- equivale a: NOT NULL UNIQUE
+  titulo text NOT NULL
+);
+```
+
+`serial` es un tipo especial que genera automáticamente el siguiente número entero disponible (1, 2, 3…) cada vez que insertas una fila sin especificar el `id`.
+
+### Ejercicio: PRIMARY KEY
+
+Razona: ¿qué problema habría si la tabla `pedidos` de Flex no tuviera clave primaria? ¿Cómo sabría el camarero qué pedido actualizar cuando quiere marcar uno como "listo"?
+
+<details>
+<summary>Respuesta</summary>
+
+Sin clave primaria, varias filas podrían ser idénticas y no habría forma de identificar de forma unívoca un pedido concreto. Si el camarero quisiera actualizar el estado del "pedido de la mesa 3 con una cerveza", podría haber varios pedidos exactamente iguales y la query `UPDATE pedidos SET estado='listo' WHERE ...` afectaría a todos ellos a la vez.
+
+La clave primaria garantiza que cada pedido tiene un identificador único (`id`) que no se repite y nunca es nulo, permitiendo operaciones precisas: `UPDATE pedidos SET estado='listo' WHERE id = 42`.
+
+</details>
+
+---
+
+### 2.6 FOREIGN KEY (clave foránea)
+
+Esta es la restricción más importante para entender las relaciones entre tablas.
+
+Una **clave foránea** es una columna cuyo valor debe existir obligatoriamente en otra tabla. Es el mecanismo que conecta tablas entre sí.
+
+```sql
+-- Tabla padre
+CREATE TABLE departamentos (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL
+);
+
+-- Tabla hija: cada empleado pertenece a un departamento que debe existir
+CREATE TABLE empleados (
+  id             serial PRIMARY KEY,
+  nombre         text NOT NULL,
+  departamento_id int REFERENCES departamentos(id)
+  --                  ↑ clave foránea: el valor debe existir en departamentos.id
+);
+
+-- Si el departamento 5 no existe, esto falla:
+INSERT INTO empleados (nombre, departamento_id) VALUES ('Luis', 5);
+-- ERROR: insert or update on table "empleados" violates foreign key constraint
+```
+
+**`ON DELETE CASCADE`** — define qué ocurre en la tabla hija cuando se borra la fila padre:
+
+```sql
+CREATE TABLE empleados (
+  id             serial PRIMARY KEY,
+  nombre         text NOT NULL,
+  departamento_id int REFERENCES departamentos(id) ON DELETE CASCADE
+  -- Si se borra el departamento, se borran automáticamente sus empleados
+);
+```
+
+Opciones disponibles:
+
+| Opción | Comportamiento |
+|---|---|
+| `ON DELETE CASCADE` | Borra las filas hijas automáticamente |
+| `ON DELETE SET NULL` | Pone la columna a `null` |
+| `ON DELETE RESTRICT` | Impide borrar el padre si tiene hijos (error) |
+| Sin opción | Igual que `RESTRICT` |
+
+### Ejercicio: FOREIGN KEY y ON DELETE
+
+Tienes `usuarios` y `comentarios`. Crea las tablas de forma que:
+- Un comentario sin usuario no pueda existir.
+- Si se borra un usuario, sus comentarios se borren también.
+- Si intentas insertar un comentario con `usuario_id = 999` y ese usuario no existe, debe fallar.
+
+Después, razona: ¿cuándo usarías `ON DELETE SET NULL` en lugar de `ON DELETE CASCADE`?
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE usuarios (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL
+);
+
+CREATE TABLE comentarios (
+  id         serial PRIMARY KEY,
+  usuario_id int NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  contenido  text NOT NULL,
+  creado_en  timestamptz NOT NULL DEFAULT now()
+);
+
+-- Esto falla porque el usuario 999 no existe:
+INSERT INTO comentarios (usuario_id, contenido) VALUES (999, 'Hola');
+-- ERROR: insert or update violates foreign key constraint
+
+-- Si borramos al usuario 1, sus comentarios desaparecen automáticamente:
+DELETE FROM usuarios WHERE id = 1;
+-- Se borran también todos los comentarios con usuario_id = 1
+```
+
+**`ON DELETE SET NULL`** tiene sentido cuando el registro hijo tiene valor propio aunque el padre desaparezca. Por ejemplo: un `pedido` tiene un `repartidor_id`. Si el repartidor causa baja en la empresa, el pedido sigue existiendo en el historial. En ese caso pondríamos `ON DELETE SET NULL` para que el pedido quede con `repartidor_id = null` en lugar de desaparecer.
+
+</details>
+
+---
+
+### 2.7 `auth.users`: la tabla interna de Supabase
+
+Supabase Auth gestiona el registro e inicio de sesión de usuarios en su propia tabla interna `auth.users`. Esta tabla no la creamos nosotros, viene con Supabase.
+
+Cuando en nuestro esquema escribimos:
+
+```sql
+CREATE TABLE perfiles (
+  id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  ...
+);
+```
+
+Estamos diciendo: "el `id` de un perfil debe ser el mismo UUID que Supabase Auth ya asignó a ese usuario". Si el usuario se elimina de `auth.users`, el perfil se borra en cascada.
+
+Esto vincula nuestros datos de aplicación (nombre, rol, avatar) al sistema de autenticación de Supabase de forma que la base de datos garantiza la coherencia.
+
+### Ejercicio: auth.users y ON DELETE CASCADE
+
+Razona sin escribir código: en Flex, la tabla `perfiles` tiene `ON DELETE CASCADE` referenciando a `auth.users`. La tabla `pedidos` también referencia `perfiles` con clave foránea.
+
+Si un usuario elimina su cuenta (se borra de `auth.users`), ¿qué ocurre con sus pedidos? ¿Qué tendrías que cambiar en la tabla `pedidos` para que los pedidos no se borren sino que queden "huérfanos" (sin cliente)?
+
+<details>
+<summary>Respuesta</summary>
+
+La cadena de eventos sería:
+1. Se borra el usuario de `auth.users`.
+2. `ON DELETE CASCADE` borra su fila en `perfiles`.
+3. Si `pedidos.cliente_id` tiene `ON DELETE CASCADE` referenciando `perfiles`, los pedidos también se borran.
+
+Para conservar el historial de pedidos aunque el cliente se vaya, cambiaríamos la clave foránea de `pedidos`:
+
+```sql
+-- En lugar de:
+cliente_id uuid REFERENCES public.perfiles(id) ON DELETE CASCADE
+
+-- Usaríamos:
+cliente_id uuid REFERENCES public.perfiles(id) ON DELETE SET NULL
+```
+
+Así, si el perfil se borra, el pedido queda con `cliente_id = null`. Perderemos la referencia al cliente, pero el historial de pedidos, el importe y el estado se conservan, lo cual es importante para la contabilidad del local.
+
+</details>
+
+---
+
+### 2.8 EXCLUDE: la restricción avanzada
+
+`EXCLUDE` es como `UNIQUE` pero más potente: en lugar de comprobar igualdad exacta, comprueba que no existan dos filas donde cierta condición sea verdadera.
+
+La sintaxis es:
+
+```sql
+CONSTRAINT nombre EXCLUDE USING gist (
+  columna1 WITH operador1,
+  columna2 WITH operador2
+) WHERE (condicion_opcional)
+```
+
+El caso de uso clásico es evitar solapamientos de rangos de tiempo. Imagina una sala de reuniones:
+
+```sql
+CREATE TABLE reservas_sala (
+  id       serial PRIMARY KEY,
+  sala     text NOT NULL,
+  inicio   timestamptz NOT NULL,
+  fin      timestamptz NOT NULL,
+
+  CONSTRAINT sin_solapamiento EXCLUDE USING gist (
+    sala WITH =,                      -- misma sala
+    tstzrange(inicio, fin) WITH &&    -- rangos se superponen
+  )
+);
+
+-- Primera reserva: sala A de 10:00 a 12:00 → OK
+INSERT INTO reservas_sala VALUES (DEFAULT, 'A', '2026-01-01 10:00', '2026-01-01 12:00');
+
+-- Segunda reserva: sala A de 11:00 a 13:00 → FALLA (se solapa)
+INSERT INTO reservas_sala VALUES (DEFAULT, 'A', '2026-01-01 11:00', '2026-01-01 13:00');
+-- ERROR: conflicting key value violates exclusion constraint "sin_solapamiento"
+
+-- Sala B en el mismo tramo → OK (distinta sala)
+INSERT INTO reservas_sala VALUES (DEFAULT, 'B', '2026-01-01 11:00', '2026-01-01 13:00');
+```
+
+`tstzrange(inicio, fin)` construye un rango de tiempo entre esas dos fechas. El operador `&&` significa "se solapan". Necesitamos `btree_gist` para poder mezclar la columna `sala` (texto, tipo B-tree) con el rango (tipo GiST) en el mismo índice.
+
+### Ejercicio 2
+
+Crea una tabla `citas_medicas` donde:
+- Cada cita tiene un `medico_id` (int), una `inicio` (timestamptz) y una `fin` (timestamptz).
+- No pueden existir dos citas del mismo médico que se solapen en el tiempo.
+- El estado puede ser `'programada'` o `'cancelada'`. Las citas canceladas no deben bloquear el horario.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+
+CREATE TABLE citas_medicas (
+  id        serial PRIMARY KEY,
+  medico_id int NOT NULL,
+  inicio    timestamptz NOT NULL,
+  fin       timestamptz NOT NULL,
+  estado    text NOT NULL DEFAULT 'programada'
+            CHECK (estado IN ('programada', 'cancelada')),
+
+  CONSTRAINT sin_solapamiento_medico EXCLUDE USING gist (
+    medico_id WITH =,
+    tstzrange(inicio, fin) WITH &&
+  ) WHERE (estado != 'cancelada')
+);
+```
+
+</details>
+
+---
+
+## 3. Funciones
+
+### ¿Qué es una función en PostgreSQL?
+
+Una función es un bloque de código reutilizable que vive dentro de la base de datos. La diferencia con el código de tu aplicación es que se ejecuta **dentro del motor de la base de datos**, lo que tiene ventajas importantes: es más rápida para operaciones con datos, es atómica (o se ejecuta entera o no se ejecuta), y puede ser llamada desde SQL, desde triggers, o desde políticas de seguridad.
+
+```sql
+CREATE OR REPLACE FUNCTION nombre_funcion(parametro tipo)
+RETURNS tipo_de_retorno
+LANGUAGE sql   -- o plpgsql, depende del tipo
+AS $$
+  -- código aquí
+$$;
+```
+
+`CREATE OR REPLACE` crea la función si no existe, o la reemplaza si ya existe. Así puedes modificarla sin borrarla primero.
+
+Los `$$` son delimitadores de texto que evitan conflictos con las comillas simples dentro del cuerpo de la función.
+
+### Funciones en SQL puro
+
+Para funciones simples (una sola consulta, sin lógica condicional) usamos `LANGUAGE sql`:
+
+```sql
+-- Función que devuelve el precio con IVA
+CREATE OR REPLACE FUNCTION precio_con_iva(precio numeric)
+RETURNS numeric
+LANGUAGE sql
+STABLE   -- el resultado no cambia dentro de la misma transacción
+AS $$
+  SELECT precio * 1.21
+$$;
+
+-- Usarla:
+SELECT precio_con_iva(10.00);
+-- 12.10
+```
+
+### Ejercicio: funciones en SQL puro
+
+Crea una función `calcular_total(precio numeric, cantidad int)` que devuelva el precio total. Luego crea otra función `aplicar_descuento(total numeric, porcentaje numeric)` que devuelva el total con el descuento aplicado.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE OR REPLACE FUNCTION calcular_total(precio numeric, cantidad int)
+RETURNS numeric
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT precio * cantidad
+$$;
+
+CREATE OR REPLACE FUNCTION aplicar_descuento(total numeric, porcentaje numeric)
+RETURNS numeric
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT total * (1 - porcentaje / 100)
+$$;
+
+-- Usar ambas encadenadas:
+SELECT aplicar_descuento(calcular_total(12.50, 3), 10);
+-- 12.50 * 3 = 37.50 → con 10% de descuento = 33.75
+```
+
+</details>
+
+---
+
+### Funciones en PL/pgSQL
+
+Para lógica más compleja (variables, condicionales, bucles) usamos `LANGUAGE plpgsql`:
+
+```sql
+CREATE OR REPLACE FUNCTION categoria_precio(precio numeric)
+RETURNS text
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  resultado text;   -- variable local
+BEGIN
+  IF precio < 5 THEN
+    resultado := 'barato';
+  ELSIF precio < 20 THEN
+    resultado := 'normal';
+  ELSE
+    resultado := 'caro';
+  END IF;
+
+  RETURN resultado;
+END;
+$$;
+
+-- Usarla:
+SELECT categoria_precio(3.50);   -- 'barato'
+SELECT categoria_precio(12.00);  -- 'normal'
+SELECT categoria_precio(50.00);  -- 'caro'
+```
+
+### Ejercicio: PL/pgSQL
+
+Crea una función `clasificar_reserva(horas numeric)` que devuelva:
+- `'corta'` si dura menos de 2 horas
+- `'normal'` si dura entre 2 y 4 horas (inclusive)
+- `'larga'` si dura más de 4 horas
+
+Usa `LANGUAGE plpgsql` con variables y condicionales.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE OR REPLACE FUNCTION clasificar_reserva(horas numeric)
+RETURNS text
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  resultado text;
+BEGIN
+  IF horas < 2 THEN
+    resultado := 'corta';
+  ELSIF horas <= 4 THEN
+    resultado := 'normal';
+  ELSE
+    resultado := 'larga';
+  END IF;
+
+  RETURN resultado;
+END;
+$$;
+
+-- Probar:
+SELECT clasificar_reserva(1);    -- 'corta'
+SELECT clasificar_reserva(2);    -- 'normal'
+SELECT clasificar_reserva(4);    -- 'normal'
+SELECT clasificar_reserva(5.5);  -- 'larga'
+```
+
+</details>
+
+---
+
+### `SECURITY DEFINER`
+
+Por defecto, una función se ejecuta con los permisos del usuario que la **llama**. Con `SECURITY DEFINER`, se ejecuta con los permisos del usuario que la **creó** (normalmente el superadmin de la DB).
+
+```sql
+CREATE OR REPLACE FUNCTION funcion_privilegiada()
+RETURNS text
+LANGUAGE sql
+SECURITY DEFINER   -- corre con permisos del creador, no del llamador
+AS $$
+  -- puede acceder a tablas que el usuario llamador no podría
+  SELECT 'acceso concedido'
+$$;
+```
+
+Esto es necesario cuando una función necesita leer tablas internas (como `auth.users`) o cuando se usa en políticas de RLS para evitar recursión infinita.
+
+### Ejercicio: SECURITY DEFINER
+
+Razona: tienes una función `obtener_email_usuario(user_id uuid)` que lee la columna `email` de `auth.users`. Los usuarios normales no tienen permiso para leer `auth.users` directamente.
+
+¿Qué keyword necesitas para que la función funcione aunque la llame un usuario sin permisos? ¿Qué riesgo tiene usar esa keyword indiscriminadamente?
+
+<details>
+<summary>Respuesta</summary>
+
+Necesitas `SECURITY DEFINER`:
+
+```sql
+CREATE OR REPLACE FUNCTION obtener_email_usuario(user_id uuid)
+RETURNS text
+LANGUAGE sql
+SECURITY DEFINER   -- se ejecuta con permisos del creador (postgres)
+STABLE
+AS $$
+  SELECT email FROM auth.users WHERE id = user_id
+$$;
+```
+
+**El riesgo:** con `SECURITY DEFINER`, la función tiene los permisos del superadmin. Si la función tiene un error de lógica o es vulnerable a inyección SQL (raro en SQL puro pero posible en PL/pgSQL con `EXECUTE`), un usuario malintencionado podría ejecutar operaciones con privilegios totales sobre la base de datos. Por eso se usa solo cuando es estrictamente necesario, se documenta bien, y se revisa con cuidado.
+
+</details>
+
+---
+
+### Funciones especiales: TRIGGER FUNCTIONS
+
+Un tipo especial de función que no recibe parámetros normales sino que recibe automáticamente la fila afectada. Debe devolver `trigger`.
+
+```sql
+CREATE OR REPLACE FUNCTION mi_funcion_trigger()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- 'NEW' contiene la nueva fila (en INSERT y UPDATE)
+  -- 'OLD' contiene la fila anterior (en UPDATE y DELETE)
+  RAISE NOTICE 'Se insertó el id: %', NEW.id;
+  RETURN NEW;
+END;
+$$;
+```
+
+Las veremos en detalle en la sección de triggers.
+
+### Ejercicio 3
+
+Crea una función `es_mayor_de_edad(fecha_nacimiento date)` que devuelva `true` si la persona tiene 18 años o más, y `false` si no. Usa `LANGUAGE sql`.
+
+> Pista: `CURRENT_DATE` es la fecha de hoy. `age(fecha)` calcula la edad. `EXTRACT(YEAR FROM age(fecha))` extrae los años.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE OR REPLACE FUNCTION es_mayor_de_edad(fecha_nacimiento date)
+RETURNS boolean
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT EXTRACT(YEAR FROM age(fecha_nacimiento)) >= 18
+$$;
+
+-- Probar:
+SELECT es_mayor_de_edad('2000-01-01');  -- true
+SELECT es_mayor_de_edad('2015-06-15');  -- false
+```
+
+</details>
+
+---
+
+## 4. Triggers
+
+### ¿Qué es un trigger?
+
+Un **trigger** (disparador) es una instrucción que le dice a PostgreSQL: *"cuando ocurra este evento en esta tabla, ejecuta automáticamente esta función"*.
+
+El evento puede ser un `INSERT`, `UPDATE` o `DELETE`. El trigger se dispara solo, sin que nadie lo llame explícitamente.
+
+```
+Evento ocurre en la tabla
+        ↓
+PostgreSQL detecta el trigger
+        ↓
+Ejecuta la función asociada automáticamente
+```
+
+### ¿Por qué son importantes?
+
+La lógica de un trigger vive en la base de datos, no en tu aplicación. Eso significa que se ejecuta **siempre**, independientemente de desde dónde llegue la operación: desde tu frontend, desde una petición directa a la API, desde el panel de administración, desde otro script. No se puede "saltar" por accidente.
+
+Sin triggers, si necesitas hacer algo automático al insertar datos, tienes que recordar hacerlo en cada lugar del código desde donde se insertan. Con un trigger, lo defines una vez y la base de datos se encarga.
+
+### Estructura de un trigger
+
+Crear un trigger requiere dos pasos:
+
+**1. Crear la función trigger** (ya vista en la sección anterior):
+
+```sql
+CREATE OR REPLACE FUNCTION nombre_funcion()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- lógica usando NEW y/o OLD
+  RETURN NEW;  -- obligatorio en BEFORE/AFTER INSERT y UPDATE
+END;
+$$;
+```
+
+**2. Crear el trigger que asocia la función al evento:**
+
+```sql
+CREATE TRIGGER nombre_trigger
+  AFTER INSERT          -- cuándo: BEFORE o AFTER el evento
+  ON nombre_tabla       -- en qué tabla
+  FOR EACH ROW          -- para cada fila afectada
+  EXECUTE FUNCTION nombre_funcion();
+```
+
+### BEFORE vs AFTER
+
+- **`BEFORE`**: la función se ejecuta antes de que el cambio se escriba en la tabla. Puedes modificar `NEW` para cambiar los valores que se van a insertar.
+- **`AFTER`**: la función se ejecuta después de que el cambio ya está guardado. `NEW` tiene los valores finales y no se puede modificar.
+
+```sql
+-- Ejemplo BEFORE: convertir el nombre a mayúsculas antes de insertar
+CREATE OR REPLACE FUNCTION normalizar_nombre()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.nombre := upper(NEW.nombre);  -- modifica el valor antes de guardar
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_normalizar
+  BEFORE INSERT ON empleados
+  FOR EACH ROW
+  EXECUTE FUNCTION normalizar_nombre();
+
+-- Al insertar 'ana', se guarda 'ANA':
+INSERT INTO empleados (nombre) VALUES ('ana');
+SELECT nombre FROM empleados;  -- 'ANA'
+```
+
+```sql
+-- Ejemplo AFTER: registrar en un log después de borrar
+CREATE OR REPLACE FUNCTION registrar_borrado()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO log_borrados (tabla, fila_id, borrado_en)
+  VALUES ('empleados', OLD.id, now());
+  RETURN OLD;
+END;
+$$;
+
+CREATE TRIGGER trigger_log_borrado
+  AFTER DELETE ON empleados
+  FOR EACH ROW
+  EXECUTE FUNCTION registrar_borrado();
+```
+
+### Ejercicio: BEFORE vs AFTER
+
+Tienes una tabla `pedidos` con una columna `total numeric`. Quieres que el `total` se calcule automáticamente al insertar el pedido, multiplicando `precio_unitario * cantidad`.
+
+¿Deberías usar un trigger `BEFORE INSERT` o `AFTER INSERT`? Escribe la función trigger.
+
+<details>
+<summary>Respuesta</summary>
+
+Debe ser **`BEFORE INSERT`**, porque necesitamos modificar `NEW.total` antes de que el dato se escriba en la tabla. Con `AFTER INSERT` el dato ya está guardado y no podemos cambiarlo.
+
+```sql
+CREATE TABLE pedidos_pizza (
+  id             serial PRIMARY KEY,
+  producto       text NOT NULL,
+  precio_unit    numeric(8,2) NOT NULL,
+  cantidad       int NOT NULL DEFAULT 1,
+  total          numeric(8,2)   -- se calcula automáticamente
+);
+
+CREATE OR REPLACE FUNCTION calcular_total_pedido()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.total := NEW.precio_unit * NEW.cantidad;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_calcular_total
+  BEFORE INSERT ON pedidos_pizza
+  FOR EACH ROW
+  EXECUTE FUNCTION calcular_total_pedido();
+
+-- Al insertar, no hace falta especificar 'total':
+INSERT INTO pedidos_pizza (producto, precio_unit, cantidad) VALUES ('Margarita', 9.50, 2);
+SELECT total FROM pedidos_pizza;  -- 19.00
+```
+
+</details>
+
+---
+
+### La variable `NEW` y `OLD`
+
+Dentro de una función trigger tienes acceso a variables especiales:
+
+| Variable | Disponible en | Contiene |
+|---|---|---|
+| `NEW` | INSERT, UPDATE | La fila nueva (después del cambio) |
+| `OLD` | UPDATE, DELETE | La fila anterior (antes del cambio) |
+
+```sql
+-- En un UPDATE puedes comparar el valor anterior y el nuevo:
+CREATE OR REPLACE FUNCTION detectar_cambio_precio()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF OLD.precio <> NEW.precio THEN
+    RAISE NOTICE 'Precio cambiado de % a %', OLD.precio, NEW.precio;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+```
+
+### Ejercicio: NEW y OLD
+
+Crea un trigger `BEFORE UPDATE` en la tabla `productos` que impida que el `stock` baje de 0. Si alguien intenta actualizar el stock a un valor negativo, el trigger debe lanzar un error con el mensaje `'El stock no puede ser negativo'` usando `RAISE EXCEPTION`.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE TABLE productos (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL,
+  stock  int NOT NULL DEFAULT 0
+);
+
+CREATE OR REPLACE FUNCTION validar_stock()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- NEW contiene los nuevos valores que se van a guardar
+  IF NEW.stock < 0 THEN
+    RAISE EXCEPTION 'El stock no puede ser negativo. Valor intentado: %', NEW.stock;
+  END IF;
+
+  RETURN NEW;  -- si pasa la validación, dejamos que el UPDATE continúe
+END;
+$$;
+
+CREATE TRIGGER trigger_validar_stock
+  BEFORE UPDATE ON productos
+  FOR EACH ROW
+  EXECUTE FUNCTION validar_stock();
+
+-- Probar:
+INSERT INTO productos (nombre, stock) VALUES ('Cerveza', 10);
+UPDATE productos SET stock = 5 WHERE id = 1;   -- OK: 5 >= 0
+UPDATE productos SET stock = -3 WHERE id = 1;  -- ERROR: El stock no puede ser negativo
+```
+
+`RAISE EXCEPTION` cancela la operación y devuelve el error al cliente. El `%` en el mensaje se reemplaza por el valor de `NEW.stock`, lo que ayuda a depurar.
+
+</details>
+
+---
+
+### El trigger de Flex: crear perfil al registrarse
+
+En Flex usamos un trigger para crear automáticamente una fila en `perfiles` cada vez que Supabase Auth registra un nuevo usuario en `auth.users`:
+
+```sql
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER   -- necesario porque auth.users requiere permisos especiales
+AS $$
+BEGIN
+  INSERT INTO public.perfiles (id, nombre)
+  VALUES (
+    NEW.id,                                   -- UUID del nuevo usuario
+    NEW.raw_user_meta_data->>'full_name'       -- nombre del JSON de metadata
+  );
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT
+  ON auth.users
+  FOR EACH ROW
+  EXECUTE FUNCTION public.handle_new_user();
+```
+
+Sin este trigger, cada vez que alguien se registrase tendríamos que acordarnos de crear el perfil desde el frontend. Con el trigger, es imposible que haya un usuario sin perfil.
+
+### Ejercicio 4
+
+Tienes estas dos tablas:
+
+```sql
+CREATE TABLE productos (
+  id          serial PRIMARY KEY,
+  nombre      text NOT NULL,
+  stock       int NOT NULL DEFAULT 0,
+  actualizado timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE movimientos_stock (
+  id          serial PRIMARY KEY,
+  producto_id int REFERENCES productos(id),
+  cambio      int NOT NULL,        -- positivo = entrada, negativo = salida
+  motivo      text,
+  creado_en   timestamptz NOT NULL DEFAULT now()
+);
+```
+
+Crea un trigger que, cada vez que se inserte un movimiento en `movimientos_stock`, actualice automáticamente el `stock` y el `actualizado` del producto correspondiente.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE OR REPLACE FUNCTION aplicar_movimiento_stock()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE productos
+  SET
+    stock       = stock + NEW.cambio,
+    actualizado = now()
+  WHERE id = NEW.producto_id;
+
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_movimiento_stock
+  AFTER INSERT ON movimientos_stock
+  FOR EACH ROW
+  EXECUTE FUNCTION aplicar_movimiento_stock();
+
+-- Probar:
+INSERT INTO productos (nombre, stock) VALUES ('Cerveza', 100);
+INSERT INTO movimientos_stock (producto_id, cambio, motivo) VALUES (1, -5, 'venta');
+SELECT stock FROM productos WHERE id = 1;  -- 95
+```
+
+</details>
+
+---
+
+## 5. Buckets de Storage
+
+### ¿Qué es Supabase Storage?
+
+Supabase Storage es el sistema de almacenamiento de ficheros de Supabase. Permite guardar imágenes, vídeos, PDFs y cualquier tipo de archivo, y obtener una URL pública para acceder a ellos desde el navegador.
+
+Es similar a servicios como Google Drive o Amazon S3, pero integrado directamente con tu base de datos y sistema de autenticación.
+
+### ¿Qué es un bucket?
+
+Un **bucket** es la unidad organizativa principal de Storage. Es como una carpeta raíz que contiene archivos. Cada bucket tiene sus propias reglas de acceso.
+
+```
+Storage
+├── bucket: productos       ← fotos del menú (público)
+│   ├── cerveza.jpg
+│   ├── nachos.jpg
+│   └── pack-cumple.jpg
+│
+└── bucket: salas-vip       ← fotos de las salas (público)
+    ├── sala-roja.jpg
+    └── sala-negra.jpg
+```
+
+### Bucket público vs privado
+
+- **Público**: cualquier persona con la URL puede ver el archivo, sin autenticación. Útil para imágenes de productos, carteles, etc.
+- **Privado**: se necesita un token de autenticación para acceder. Útil para documentos personales, facturas, etc.
+
+### Crear buckets en SQL
+
+Supabase guarda la configuración de los buckets en la tabla `storage.buckets`. Podemos crearlos directamente con SQL en una migración:
+
+```sql
+INSERT INTO storage.buckets (id, name, public) VALUES
+  ('productos', 'productos', true),
+  ('salas-vip', 'salas-vip', true);
+```
+
+- `id` y `name` suelen ser iguales.
+- `public = true` hace que los archivos sean accesibles sin autenticación.
+
+### Ejercicio: crear buckets en SQL
+
+Crea en SQL los buckets necesarios para un blog: uno público para las imágenes de los artículos (`articulos`) y uno privado para los borradores de los autores (`borradores`). ¿Por qué el segundo debe ser privado?
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+INSERT INTO storage.buckets (id, name, public) VALUES
+  ('articulos',  'articulos',  true),   -- las imágenes de los artículos son públicas
+  ('borradores', 'borradores', false);  -- los borradores son privados
+```
+
+El bucket `borradores` debe ser **privado** porque contiene contenido sin publicar que solo el autor (o los editores autorizados) deben poder leer. Si fuera público, cualquier persona con la URL podría leer borradores no publicados antes de que el autor los revise.
+
+</details>
+
+---
+
+### La URL de un archivo
+
+Una vez subido un archivo, su URL sigue siempre el mismo patrón:
+
+```
+[URL_SUPABASE]/storage/v1/object/public/[BUCKET]/[NOMBRE_ARCHIVO]
+```
+
+Ejemplo en local:
+```
+http://localhost:54321/storage/v1/object/public/productos/cerveza.jpg
+```
+
+El método `getPublicUrl` del SDK de Supabase simplemente construye este string sin hacer ninguna petición de red. Lo usarás así desde JavaScript:
+
+```js
+const { data } = supabase.storage
+  .from('productos')
+  .getPublicUrl('cerveza.jpg')
+
+console.log(data.publicUrl)
+// http://localhost:54321/storage/v1/object/public/productos/cerveza.jpg
+```
+
+### Ejercicio: construir una URL pública a mano
+
+Sin ejecutar código, construye manualmente la URL pública de un archivo llamado `sala-gold.jpg` en el bucket `salas-vip`, sabiendo que la URL base de Supabase local es `http://localhost:54321`.
+
+Luego explica: si subes el archivo con `upload('fotos/sala-gold.jpg', ...)` (dentro de una subcarpeta), ¿cómo cambia la URL?
+
+<details>
+<summary>Respuesta</summary>
+
+URL sin subcarpeta:
+```
+http://localhost:54321/storage/v1/object/public/salas-vip/sala-gold.jpg
+```
+
+Si subes con `upload('fotos/sala-gold.jpg', ...)`, la ruta completa forma parte del nombre del fichero en Storage. La URL sería:
+```
+http://localhost:54321/storage/v1/object/public/salas-vip/fotos/sala-gold.jpg
+```
+
+Supabase Storage admite rutas con subcarpetas. No son carpetas reales en el sistema operativo, sino que el `/` es simplemente parte del nombre del fichero. `getPublicUrl('fotos/sala-gold.jpg')` construirá la URL correcta automáticamente.
+
+</details>
+
+---
+
+### Subir archivos
+
+Para subir un archivo desde JavaScript:
+
+```js
+const { error } = await supabase.storage
+  .from('productos')
+  .upload('cerveza.jpg', archivoDelInput)
+
+if (error) console.error(error)
+```
+
+Después obtienes la URL y la guardas en la base de datos:
+
+```js
+const { data } = supabase.storage
+  .from('productos')
+  .getPublicUrl('cerveza.jpg')
+
+await supabase
+  .from('productos')
+  .update({ imagen_url: data.publicUrl })
+  .eq('id', productoId)
+```
+
+### Ejercicio 5
+
+Razona sin ejecutar código: tienes un bucket `documentos` creado con `public = false`. Un usuario no autenticado intenta acceder a la URL directa de un archivo. ¿Qué ocurrirá? ¿Y si el bucket fuera público pero el usuario no tiene permisos de `INSERT` en ese bucket?
+
+<details>
+<summary>Respuesta</summary>
+
+**Bucket privado, usuario no autenticado:** Supabase devuelve un error 400 o 401. La URL directa no es accesible. Para acceder habría que generar una URL firmada temporal con `createSignedUrl`.
+
+**Bucket público, sin permisos de INSERT:** El usuario puede **ver** archivos (lectura pública) pero no puede **subir** nuevos archivos. Las operaciones de escritura (upload, delete) están controladas por las políticas de Storage, que son independientes de si el bucket es público o no. La visibilidad pública solo afecta a la lectura.
+
+</details>
+
+---
+
+## Resumen de conceptos
+
+| Concepto | En una frase |
+|---|---|
+| **Extensión** | Plugin que activa funcionalidades opcionales de PostgreSQL |
+| **NOT NULL** | La columna no puede estar vacía |
+| **DEFAULT** | Valor automático si no se especifica |
+| **CHECK** | La columna solo acepta valores que cumplan una condición |
+| **UNIQUE** | No pueden existir dos filas con el mismo valor |
+| **PRIMARY KEY** | Identificador único de cada fila (NOT NULL + UNIQUE) |
+| **FOREIGN KEY** | El valor debe existir en otra tabla; conecta tablas |
+| **EXCLUDE** | No pueden existir dos filas donde cierta condición sea verdadera |
+| **Función** | Bloque de código reutilizable que vive en la base de datos |
+| **Trigger** | Ejecuta una función automáticamente cuando ocurre un evento |
+| **Bucket** | Carpeta raíz de Supabase Storage con sus propias reglas de acceso |
+
+---
+
+## Ejercicio final integrador
+
+Diseña el esquema SQL de un sistema de reserva de pistas de pádel con las siguientes reglas:
+
+1. Hay pistas identificadas por número (1, 2, 3…) y tipo (`'cubierta'` o `'exterior'`). Un número de pista solo puede existir una vez.
+2. Los usuarios tienen nombre, email (único) y un nivel: `'principiante'`, `'intermedio'` o `'avanzado'`.
+3. Una reserva tiene usuario, pista, hora de inicio y fin, y estado: `'confirmada'` o `'cancelada'`.
+4. No pueden hacerse dos reservas de la misma pista en el mismo tramo horario (excepto si están canceladas).
+5. Cuando un usuario se elimina, sus reservas deben eliminarse también.
+6. Cada vez que se confirma una nueva reserva, debe registrarse automáticamente en una tabla `notificaciones` con el mensaje `'Nueva reserva confirmada'` y la fecha.
+
+<details>
+<summary>Respuesta</summary>
+
+```sql
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+
+CREATE TABLE pistas (
+  id     serial PRIMARY KEY,
+  numero int NOT NULL UNIQUE,
+  tipo   text NOT NULL CHECK (tipo IN ('cubierta', 'exterior'))
+);
+
+CREATE TABLE usuarios (
+  id     serial PRIMARY KEY,
+  nombre text NOT NULL,
+  email  text NOT NULL UNIQUE,
+  nivel  text NOT NULL DEFAULT 'principiante'
+         CHECK (nivel IN ('principiante', 'intermedio', 'avanzado'))
+);
+
+CREATE TABLE reservas (
+  id        serial PRIMARY KEY,
+  usuario_id int NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  pista_id   int NOT NULL REFERENCES pistas(id),
+  inicio     timestamptz NOT NULL,
+  fin        timestamptz NOT NULL,
+  estado     text NOT NULL DEFAULT 'confirmada'
+             CHECK (estado IN ('confirmada', 'cancelada')),
+
+  CONSTRAINT sin_solapamiento_pista EXCLUDE USING gist (
+    pista_id WITH =,
+    tstzrange(inicio, fin) WITH &&
+  ) WHERE (estado != 'cancelada')
+);
+
+CREATE TABLE notificaciones (
+  id         serial PRIMARY KEY,
+  usuario_id int REFERENCES usuarios(id) ON DELETE CASCADE,
+  mensaje    text NOT NULL,
+  creado_en  timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE OR REPLACE FUNCTION notificar_reserva()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF NEW.estado = 'confirmada' THEN
+    INSERT INTO notificaciones (usuario_id, mensaje)
+    VALUES (NEW.usuario_id, 'Nueva reserva confirmada');
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trigger_notificar_reserva
+  AFTER INSERT ON reservas
+  FOR EACH ROW
+  EXECUTE FUNCTION notificar_reserva();
+```
+
+</details>
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| | [01 — Base de Datos y Storage →](./01-db-y-storage-flex.md) |
+</file>
+
+<file path="docs/02-seguridad-rls.md">
+# 02 — Seguridad con Row Level Security (RLS)
+
+> **Proyecto Flex** · Stack: Next.js · Supabase · Zustand · Stripe  
+> Nivel: Principiante-Intermedio
+
+---
+
+## ¿Por qué RLS y no solo validar en el frontend?
+
+El frontend es **código público**. Cualquier persona con DevTools puede ver tus queries, robar la `anon key` y lanzar peticiones directas a Supabase saltándose toda validación de tu app.
+
+**Row Level Security (RLS)** es una característica de PostgreSQL que evalúa una política de seguridad **dentro del propio motor de la base de datos**, antes de devolver ningún dato. No importa de dónde venga la petición: si la política dice "no", no hay dato.
+
+```
+Sin RLS:                          Con RLS:
+Cliente malo ──▶ Supabase API ──▶ DB (devuelve todo)   ← PELIGROSO
+Cliente malo ──▶ Supabase API ──▶ RLS evalúa ──▶ DB   ← BLOQUEADO
+```
+
+---
+
+## Modelo de roles en Flex
+
+| Rol      | Quién es                         | Qué puede hacer                                        |
+|----------|----------------------------------|--------------------------------------------------------|
+| `cliente`| Usuario registrado del local     | Ver su propio perfil, crear pedidos, ver sus reservas  |
+| `staff`  | Camarero / encargado de barra    | Ver todos los pedidos de su piso, actualizar estado    |
+| `admin`  | Dueño del local                  | Acceso total: productos, mesas, reservas, perfiles     |
+
+El rol se almacena en `public.perfiles.rol`. Supabase Auth no sabe de este campo, así que en cada política consultamos esa tabla.
+
+---
+
+## Patrón base: función helper de rol
+
+Para no repetir el subquery de rol en cada política, creamos una función auxiliar:
+
+```sql
+-- Devuelve el rol del usuario autenticado actualmente.
+-- 'security definer' significa que se ejecuta con permisos del creador (postgres),
+-- no con los del usuario que llama. Así evitamos recursión infinita en las políticas.
+create or replace function public.mi_rol()
+returns text
+language sql
+stable          -- el resultado no cambia durante la misma transacción
+security definer
+as $$
+  select rol from public.perfiles where id = auth.uid()
+$$;
+```
+
+Ahora en las políticas usamos `public.mi_rol()` en lugar de repetir el subquery.
+
+---
+
+## 1. Estructura de migraciones: esquema vs. políticas
+
+Las migraciones de Supabase se aplican en orden por timestamp. En Flex separamos la seguridad en dos archivos:
+
+```
+supabase/migrations/
+  20260513160558_esquema_inicial.sql   ← tablas, triggers, datos de ejemplo + ENABLE RLS
+  20260513160559_politicas_rls.sql     ← función mi_rol() + todas las políticas
+```
+
+**¿Por qué esta separación?**
+
+- **`ENABLE ROW LEVEL SECURITY`** es un atributo de la tabla, no una regla de negocio. Va junto a `CREATE TABLE` porque sin ese flag las políticas no tienen efecto, y una tabla sin RLS activo es pública por defecto.
+- Las **políticas** cambian con más frecuencia (nuevos roles, ajustes de permisos). Con una migración propia, cada cambio de seguridad tiene su propio diff limpio, fácil de revisar y de revertir.
+
+### Activar RLS (en `_esquema_inicial.sql`)
+
+Por defecto RLS está **desactivado**. Hay que activarlo tabla a tabla. Sin ninguna política activa, una tabla con RLS habilitado deniega **todo** — buen estado por defecto.
+
+```sql
+alter table public.perfiles      enable row level security;
+alter table public.mesas         enable row level security;
+alter table public.productos     enable row level security;
+alter table public.pedidos       enable row level security;
+alter table public.pedido_items  enable row level security;
+alter table public.salas_vip     enable row level security;
+alter table public.reservas      enable row level security;
+```
+
+Las políticas se definen en la migración siguiente.
+
+---
+
+## 2. Políticas para `perfiles`
+
+```sql
+-- Un cliente ve y edita SOLO su propio perfil
+create policy "perfil propio: lectura"
+  on public.perfiles for select
+  using ( id = auth.uid() );
+
+create policy "perfil propio: edición"
+  on public.perfiles for update
+  using ( id = auth.uid() )
+  with check ( id = auth.uid() );
+
+-- El admin ve todos los perfiles
+create policy "admin: lectura total perfiles"
+  on public.perfiles for select
+  using ( public.mi_rol() = 'admin' );
+
+-- El trigger de registro (apunte 01) necesita insertar con service_role,
+-- que ignora RLS. No necesitamos política de INSERT para clientes.
+```
+
+---
+
+## 3. Políticas para `mesas` y `salas_vip`
+
+```sql
+-- Todos los usuarios autenticados pueden VER mesas y salas (para la UI)
+create policy "autenticado: ver mesas"
+  on public.mesas for select
+  using ( auth.role() = 'authenticated' );
+
+create policy "autenticado: ver salas vip"
+  on public.salas_vip for select
+  using ( auth.role() = 'authenticated' );
+
+-- Solo admin puede crear/modificar/borrar mesas y salas
+create policy "admin: gestionar mesas"
+  on public.mesas for all
+  using ( public.mi_rol() = 'admin' )
+  with check ( public.mi_rol() = 'admin' );
+
+create policy "admin: gestionar salas vip"
+  on public.salas_vip for all
+  using ( public.mi_rol() = 'admin' )
+  with check ( public.mi_rol() = 'admin' );
+```
+
+---
+
+## 4. Políticas para `productos`
+
+```sql
+-- Cualquier usuario autenticado ve el menú
+create policy "autenticado: ver productos"
+  on public.productos for select
+  using ( auth.role() = 'authenticated' );
+
+-- Staff y admin gestionan el menú (crear, editar, borrar)
+create policy "staff/admin: gestionar productos"
+  on public.productos for all
+  using ( public.mi_rol() in ('staff', 'admin') )
+  with check ( public.mi_rol() in ('staff', 'admin') );
+```
+
+---
+
+## 5. Políticas para `pedidos`
+
+Aquí está la lógica más importante. El staff necesita ver los pedidos de su zona.
+
+```sql
+-- Un cliente ve SOLO sus propios pedidos
+create policy "cliente: ver sus pedidos"
+  on public.pedidos for select
+  using (
+    cliente_id = auth.uid()
+    and public.mi_rol() = 'cliente'
+  );
+
+-- Un cliente puede CREAR pedidos (solo como su propio usuario)
+create policy "cliente: crear pedidos"
+  on public.pedidos for insert
+  with check (
+    cliente_id = auth.uid()
+    and public.mi_rol() = 'cliente'
+  );
+
+-- Staff ve TODOS los pedidos (necesita ver el panel de barra en tiempo real)
+-- No filtramos por piso aquí; el filtro de piso lo hace la query de la app,
+-- pero si el staff intenta leer pedidos de otro local (en un sistema multi-tenant)
+-- el RLS lo impediría a nivel de proyecto.
+create policy "staff: ver todos los pedidos"
+  on public.pedidos for select
+  using ( public.mi_rol() in ('staff', 'admin') );
+
+-- Staff puede actualizar el estado del pedido (pendiente → en_barra → listo…)
+create policy "staff: actualizar estado pedido"
+  on public.pedidos for update
+  using ( public.mi_rol() in ('staff', 'admin') )
+  with check ( public.mi_rol() in ('staff', 'admin') );
+
+-- Admin puede borrar pedidos (para limpiar datos de prueba, por ejemplo)
+create policy "admin: borrar pedidos"
+  on public.pedidos for delete
+  using ( public.mi_rol() = 'admin' );
+```
+
+---
+
+## 6. Políticas para `pedido_items`
+
+```sql
+-- El cliente ve los ítems de SUS pedidos
+create policy "cliente: ver items de sus pedidos"
+  on public.pedido_items for select
+  using (
+    exists (
+      select 1 from public.pedidos
+      where pedidos.id = pedido_items.pedido_id
+        and pedidos.cliente_id = auth.uid()
+    )
+  );
+
+-- El cliente puede insertar ítems en SUS pedidos
+create policy "cliente: insertar items"
+  on public.pedido_items for insert
+  with check (
+    exists (
+      select 1 from public.pedidos
+      where pedidos.id = pedido_items.pedido_id
+        and pedidos.cliente_id = auth.uid()
+    )
+  );
+
+-- Staff/admin ven y modifican todos los ítems
+create policy "staff: ver todos los items"
+  on public.pedido_items for select
+  using ( public.mi_rol() in ('staff', 'admin') );
+```
+
+---
+
+## 7. Políticas para `reservas`
+
+```sql
+-- Un cliente ve SOLO sus reservas
+create policy "cliente: ver sus reservas"
+  on public.reservas for select
+  using ( cliente_id = auth.uid() );
+
+-- Un cliente puede crear una reserva (el webhook de Stripe la confirmará)
+create policy "cliente: crear reserva"
+  on public.reservas for insert
+  with check (
+    cliente_id = auth.uid()
+    and public.mi_rol() = 'cliente'
+  );
+
+-- Un cliente puede cancelar SU reserva (si el estado es 'pendiente')
+create policy "cliente: cancelar reserva pendiente"
+  on public.reservas for update
+  using (
+    cliente_id = auth.uid()
+    and estado = 'pendiente'
+  )
+  with check (
+    cliente_id = auth.uid()
+    and estado = 'cancelada'   -- solo puede cambiar a 'cancelada', no a 'pagada'
+  );
+
+-- Staff/admin ven todas las reservas
+create policy "staff: ver todas las reservas"
+  on public.reservas for select
+  using ( public.mi_rol() in ('staff', 'admin') );
+
+-- Admin gestiona todo
+create policy "admin: gestionar reservas"
+  on public.reservas for all
+  using ( public.mi_rol() = 'admin' )
+  with check ( public.mi_rol() = 'admin' );
+```
+
+---
+
+## 8. El caso del Webhook de Stripe
+
+El webhook de Stripe actualiza el estado de una reserva (`pendiente` → `pagada`). Esta lógica corre en una **Edge Function** con la `service_role key`, que **bypasea RLS**. Eso es intencional: el webhook actúa como el sistema, no como un usuario.
+
+```
+Stripe ──▶ Edge Function (service_role) ──▶ UPDATE reservas SET estado='pagada'
+                                            (RLS ignorado → correcto para esta operación)
+```
+
+> Nunca expongas la `service_role key` en el cliente. Solo vive en variables de entorno del servidor.
+
+---
+
+## 9. Verificar que las políticas funcionan
+
+Usa el **SQL Editor** de Supabase para simular un usuario concreto:
+
+```sql
+-- Simula ser el usuario con ese UUID
+set request.jwt.claims = '{"sub":"<UUID-del-cliente>","role":"authenticated"}';
+
+-- Esto debería devolver solo los pedidos de ese usuario
+select * from public.pedidos;
+
+-- Esto debería devolver 0 filas (el cliente no ve pedidos de otros)
+select * from public.pedidos where cliente_id != '<UUID-del-cliente>';
+```
+
+O usa la pestaña **Authentication → Policies** del Dashboard para ver las políticas activas visualmente.
+
+---
+
+## Resumen rápido
+
+| Tabla          | Cliente              | Staff                     | Admin        |
+|----------------|----------------------|---------------------------|--------------|
+| `perfiles`     | Solo el suyo         | —                         | Todos        |
+| `mesas`        | Solo lectura         | Solo lectura              | CRUD         |
+| `productos`    | Solo lectura         | CRUD                      | CRUD         |
+| `pedidos`      | Solo los suyos       | Lectura + actualizar estado | CRUD       |
+| `pedido_items` | Solo los suyos       | Lectura total             | CRUD         |
+| `salas_vip`    | Solo lectura         | Solo lectura              | CRUD         |
+| `reservas`     | Solo las suyas       | Lectura total             | CRUD         |
+
+---
+
+## Reto Flex 🎸
+
+1. Crea un rol `portero` en la tabla `perfiles` (añade `'portero'` al `check` de la columna `rol`).
+2. Define una política en `reservas` para que el portero pueda hacer `SELECT` y `UPDATE` (solo el campo `estado` de `completada`), pero **no** `INSERT` ni `DELETE`.
+3. Escribe una query SQL que simule al portero intentando borrar una reserva y verifica que falla con el error de RLS.
+
+> **Pista:** El portero necesita verificar entradas en la puerta de las salas VIP, así que solo debe poder marcar una reserva como `completada` cuando el cliente llega.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 01 — Base de Datos y Storage](./01-db-y-storage-flex.md) | [03 — Estado con Zustand →](./03-estado-con-zustand.md) |
+</file>
+
+<file path="docs/03-estado-con-zustand.md">
+# 03 — Estado Global con Zustand
+
+> **Proyecto Flex** · Stack: Next.js · Supabase · Zustand · Stripe  
+> Nivel: Principiante-Intermedio
+
+---
+
+## ¿Por qué Zustand y no Context API o Redux?
+
+| Herramienta   | Ventaja                        | Inconveniente                         |
+|---------------|--------------------------------|---------------------------------------|
+| Context API   | Nativa de React, sin instalar  | Re-render de todo el árbol al cambiar |
+| Redux Toolkit | Muy potente, DevTools          | Boilerplate, curva de aprendizaje     |
+| **Zustand**   | Mínimo boilerplate, rápido     | Menos ecosistema que Redux            |
+
+Para Flex necesitamos:
+
+- **Carrito de consumiciones** (añadir bebidas/comida desde el menú)
+- **Selección de sala VIP** (qué sala, qué franja horaria)
+- Sincronización de UI sin recargar la página
+
+Zustand resuelve todo esto con muy poco código y sin contextos anidados.
+
+---
+
+## Instalación
+
+- Instalación global de pnpm, alternativa moderna y (en teoría) más segura que npm.
+
+```bash
+npm install -g pnpm@latest-11
+```
+
+- Podemos instalar nextjs dentro de esta carpeta, utilizando el "." al final de la instalación.
+  
+```bash
+pnpm create next-app .
+pnpm add zustand
+```
+
+---
+
+## Estructura de stores
+
+Creamos dos stores separados. Cada store es responsable de **una sola cosa** (principio de responsabilidad única):
+
+```
+store/
+  carritoStore.js    ← consumiciones (bebidas, comida)
+  reservaStore.js    ← selección de sala VIP + franja horaria
+```
+
+---
+
+## 1. `carritoStore.js`
+
+```js
+// store/carritoStore.js
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+/**
+ * Store del carrito de consumiciones.
+ *
+ * Usamos el middleware 'persist' para guardar el carrito en localStorage.
+ * Si el usuario recarga la página o cierra el navegador accidentalmente,
+ * no pierde lo que había añadido.
+ *
+ * Estructura de cada item:
+ * {
+ *   id: number,         ← id del producto en la DB
+ *   nombre: string,
+ *   precio: number,
+ *   imagen_url: string,
+ *   cantidad: number
+ * }
+ */
+export const useCarritoStore = create(
+  persist(
+    (set, get) => ({
+      // ─── Estado ───────────────────────────────────────────────────
+      items: [],       // array de productos en el carrito
+      mesaId: null,    // mesa donde está sentado el cliente
+
+      // ─── Acciones ─────────────────────────────────────────────────
+
+      /**
+       * Establece la mesa del cliente (se llama al escanear el QR de la mesa).
+       */
+      setMesa(mesaId) {
+        set({ mesaId })
+      },
+
+      /**
+       * Añade un producto. Si ya existe, incrementa la cantidad.
+       */
+      agregarItem(producto) {
+        set((estado) => {
+          const existente = estado.items.find((i) => i.id === producto.id)
+
+          if (existente) {
+            // Mapea el array: solo cambia el item que coincide
+            return {
+              items: estado.items.map((i) =>
+                i.id === producto.id ? { ...i, cantidad: i.cantidad + 1 } : i
+              ),
+            }
+          }
+
+          // Producto nuevo: lo añadimos con cantidad 1
+          return { items: [...estado.items, { ...producto, cantidad: 1 }] }
+        })
+      },
+
+      /**
+       * Reduce la cantidad. Si llega a 0, elimina el item del carrito.
+       */
+      quitarItem(productoId) {
+        set((estado) => ({
+          items: estado.items
+            .map((i) =>
+              i.id === productoId ? { ...i, cantidad: i.cantidad - 1 } : i
+            )
+            .filter((i) => i.cantidad > 0),  // eliminar si cantidad = 0
+        }))
+      },
+
+      /**
+       * Elimina un producto del carrito independientemente de la cantidad.
+       */
+      eliminarItem(productoId) {
+        set((estado) => ({
+          items: estado.items.filter((i) => i.id !== productoId),
+        }))
+      },
+
+      /**
+       * Vacía el carrito. Se llama tras confirmar el pedido.
+       */
+      vaciarCarrito() {
+        set({ items: [], mesaId: null })
+      },
+
+      // ─── Derivados (calculados) ────────────────────────────────────
+
+      /**
+       * Número total de unidades en el carrito (suma de cantidades).
+       * Útil para el badge del icono del carrito.
+       */
+      get totalUnidades() {
+        return get().items.reduce((acc, i) => acc + i.cantidad, 0)
+      },
+
+      /**
+       * Precio total del carrito.
+       */
+      get totalPrecio() {
+        return get().items.reduce((acc, i) => acc + i.precio * i.cantidad, 0)
+      },
+    }),
+    {
+      name: 'flex-carrito',  // clave en localStorage
+      // Solo persistimos 'items' y 'mesaId', no las funciones
+      partialize: (estado) => ({ items: estado.items, mesaId: estado.mesaId }),
+    }
+  )
+)
+```
+
+---
+
+## 2. `reservaStore.js`
+
+```js
+// store/reservaStore.js
+import { create } from 'zustand'
+
+/**
+ * Store para la selección de sala VIP.
+ * NO persistimos esto en localStorage porque es un flujo de pago activo;
+ * si el usuario recarga, debe empezar desde el principio (evita estados corruptos).
+ */
+export const useReservaStore = create((set, get) => ({
+  // ─── Estado ─────────────────────────────────────────────────────
+  salaSeleccionada: null,  // objeto sala completo (id, nombre, precio_hora…)
+  fechaInicio: null,       // Date | null
+  fechaFin: null,          // Date | null
+  paso: 1,                 // 1: elegir sala | 2: elegir horario | 3: confirmar pago
+
+  // ─── Acciones ───────────────────────────────────────────────────
+
+  seleccionarSala(sala) {
+    set({ salaSeleccionada: sala, paso: 2 })
+  },
+
+  seleccionarHorario(inicio, fin) {
+    set({ fechaInicio: inicio, fechaFin: fin, paso: 3 })
+  },
+
+  /**
+   * Vuelve al paso anterior.
+   */
+  retroceder() {
+    set((estado) => ({ paso: Math.max(1, estado.paso - 1) }))
+  },
+
+  /**
+   * Limpia la selección. Se llama si el usuario cancela el flujo
+   * o cuando el pago se completa.
+   */
+  resetReserva() {
+    set({
+      salaSeleccionada: null,
+      fechaInicio: null,
+      fechaFin: null,
+      paso: 1,
+    })
+  },
+
+  // ─── Derivados ──────────────────────────────────────────────────
+
+  /**
+   * Calcula el precio total basándose en precio_hora y las horas seleccionadas.
+   * Devuelve 0 si no hay sala o fechas seleccionadas.
+   */
+  get totalReserva() {
+    const { salaSeleccionada, fechaInicio, fechaFin } = get()
+    if (!salaSeleccionada || !fechaInicio || !fechaFin) return 0
+
+    const horas = (fechaFin - fechaInicio) / (1000 * 60 * 60)  // ms → horas
+    return Math.max(0, horas * salaSeleccionada.precio_hora)
+  },
+}))
+```
+
+---
+
+## 3. Uso en componentes React
+
+### 3.1 Botón "Añadir al carrito"
+
+```jsx
+// components/TarjetaProducto.jsx
+'use client'
+
+import { useCarritoStore } from '@/store/carritoStore'
+
+export default function TarjetaProducto({ producto }) {
+  // Solo nos suscribimos a la acción, no al array completo.
+  // Así el componente NO re-renderiza cuando cambia el carrito de otro producto.
+  const agregarItem = useCarritoStore((estado) => estado.agregarItem)
+
+  return (
+    <div className="tarjeta-producto">
+      <img src={producto.imagen_url} alt={producto.nombre} />
+      <h3>{producto.nombre}</h3>
+      <p>{producto.precio} €</p>
+      <button onClick={() => agregarItem(producto)}>
+        + Añadir
+      </button>
+    </div>
+  )
+}
+```
+
+### 3.2 Icono del carrito con badge
+
+```jsx
+// components/IconoCarrito.jsx
+'use client'
+
+import { useCarritoStore } from '@/store/carritoStore'
+
+export default function IconoCarrito() {
+  // Suscripción selectiva: solo re-renderiza cuando cambia totalUnidades
+  const totalUnidades = useCarritoStore((estado) =>
+    estado.items.reduce((acc, i) => acc + i.cantidad, 0)
+  )
+
+  return (
+    <div className="icono-carrito">
+      🛒
+      {totalUnidades > 0 && (
+        <span className="badge">{totalUnidades}</span>
+      )}
+    </div>
+  )
+}
+```
+
+### 3.3 Panel del carrito
+
+```jsx
+// components/PanelCarrito.jsx
+'use client'
+
+import { useCarritoStore } from '@/store/carritoStore'
+import { confirmarPedido } from '@/app/actions/pedidos'
+
+export default function PanelCarrito() {
+  const { items, mesaId, quitarItem, eliminarItem, vaciarCarrito } =
+    useCarritoStore()
+
+  const total = items.reduce((acc, i) => acc + i.precio * i.cantidad, 0)
+
+  async function handleConfirmar() {
+    if (!mesaId) {
+      alert('No hay mesa seleccionada. Escanea el QR de tu mesa.')
+      return
+    }
+    // Server Action: crea el pedido y los pedido_items en Supabase
+    await confirmarPedido({ items, mesaId })
+    vaciarCarrito()
+  }
+
+  if (items.length === 0) return <p>El carrito está vacío</p>
+
+  return (
+    <div className="panel-carrito">
+      {items.map((item) => (
+        <div key={item.id} className="carrito-item">
+          <span>{item.nombre}</span>
+          <button onClick={() => quitarItem(item.id)}>–</button>
+          <span>{item.cantidad}</span>
+          <button onClick={() => quitarItem(item.id)}>+</button>
+          <span>{(item.precio * item.cantidad).toFixed(2)} €</span>
+          <button onClick={() => eliminarItem(item.id)}>🗑</button>
+        </div>
+      ))}
+
+      <p className="total">Total: {total.toFixed(2)} €</p>
+      <button onClick={handleConfirmar}>Confirmar pedido</button>
+    </div>
+  )
+}
+```
+
+### 3.4 Selector de sala VIP (flujo por pasos)
+
+```jsx
+// components/SelectorSalaVip.jsx
+'use client'
+
+import { useReservaStore } from '@/store/reservaStore'
+
+export default function SelectorSalaVip({ salas }) {
+  const { paso, salaSeleccionada, seleccionarSala, seleccionarHorario, retroceder } =
+    useReservaStore()
+
+  // Paso 1: lista de salas disponibles
+  if (paso === 1) {
+    return (
+      <div>
+        <h2>Elige tu sala VIP</h2>
+        {salas.map((sala) => (
+          <div key={sala.id} onClick={() => seleccionarSala(sala)}>
+            <img src={sala.imagen_url} alt={sala.nombre} />
+            <h3>{sala.nombre}</h3>
+            <p>{sala.precio_hora} €/hora</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // Paso 2: seleccionar horario
+  if (paso === 2) {
+    function handleHorario(e) {
+      e.preventDefault()
+      const inicio = new Date(e.target.inicio.value)
+      const fin    = new Date(e.target.fin.value)
+      if (fin <= inicio) {
+        alert('La hora de fin debe ser posterior a la de inicio.')
+        return
+      }
+      seleccionarHorario(inicio, fin)
+    }
+
+    return (
+      <div>
+        <button onClick={retroceder}>← Volver</button>
+        <h2>Horario para {salaSeleccionada.nombre}</h2>
+        <form onSubmit={handleHorario}>
+          <label>Inicio: <input type="datetime-local" name="inicio" required /></label>
+          <label>Fin:    <input type="datetime-local" name="fin"    required /></label>
+          <button type="submit">Continuar al pago</button>
+        </form>
+      </div>
+    )
+  }
+
+  // Paso 3: resumen antes del pago (el pago lo gestiona Stripe en el apunte 04)
+  if (paso === 3) {
+    const horas = (useReservaStore.getState().fechaFin - useReservaStore.getState().fechaInicio) / 3600000
+    const total = (horas * salaSeleccionada.precio_hora).toFixed(2)
+
+    return (
+      <div>
+        <button onClick={retroceder}>← Volver</button>
+        <h2>Confirmar reserva</h2>
+        <p>Sala: {salaSeleccionada.nombre}</p>
+        <p>Horas: {horas}h · Total: {total} €</p>
+        {/* El botón de pago irá aquí — ver apunte 04 */}
+      </div>
+    )
+  }
+}
+```
+
+---
+
+## 4. Sincronización de UI sin recargar
+
+Zustand actualiza la UI de forma automática cuando cambia el estado. No hace falta `useEffect` ni llamadas manuales. El flujo es:
+
+```
+Usuario pulsa "Añadir" → agregarItem() → Zustand actualiza items
+                       ↓
+Todos los componentes suscritos a 'items' se re-renderizan automáticamente
+(PanelCarrito, IconoCarrito, etc.)
+```
+
+**Suscripción selectiva** (importante para rendimiento):
+
+```js
+// MAL: se suscribe a TODO el estado → re-render en cualquier cambio
+const estado = useCarritoStore()
+
+// BIEN: solo re-renderiza cuando cambia 'items'
+const items = useCarritoStore((estado) => estado.items)
+
+// MEJOR: solo re-renderiza cuando cambia el número de unidades
+const totalUnidades = useCarritoStore((estado) =>
+  estado.items.reduce((acc, i) => acc + i.cantidad, 0)
+)
+```
+
+---
+
+## 5. Acceder al store fuera de React (Server Actions)
+
+Zustand funciona fuera de componentes React si lo necesitas:
+
+```js
+// app/actions/pedidos.js
+'use server'
+
+import { supabase } from '@/lib/supabase'
+
+/**
+ * Server Action: crea el pedido y sus ítems en Supabase.
+ * Recibe los datos del carrito serializados (no puede recibir el store directamente).
+ */
+export async function confirmarPedido({ items, mesaId }) {
+  // Obtener el usuario autenticado en el servidor
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+
+  const total = items.reduce((acc, i) => acc + i.precio * i.cantidad, 0)
+
+  // Crear el pedido
+  const { data: pedido, error: errorPedido } = await supabase
+    .from('pedidos')
+    .insert({ mesa_id: mesaId, cliente_id: user.id, total })
+    .select()
+    .single()
+
+  if (errorPedido) throw new Error(errorPedido.message)
+
+  // Crear las líneas del pedido
+  const lineas = items.map((item) => ({
+    pedido_id:   pedido.id,
+    producto_id: item.id,
+    cantidad:    item.cantidad,
+    precio_unit: item.precio,  // snapshot del precio
+  }))
+
+  const { error: errorItems } = await supabase
+    .from('pedido_items')
+    .insert(lineas)
+
+  if (errorItems) throw new Error(errorItems.message)
+
+  return pedido
+}
+```
+
+---
+
+## Reto Flex 🎸
+
+1. Añade al `carritoStore` una acción `aplicarDescuento(codigo)` que:
+   - Acepte los códigos `'FLEX10'` (10% de descuento) y `'FLEX20'` (20%).
+   - Guarde el descuento aplicado en el estado (`descuento: 0`).
+   - Si el código no es válido, lance un error con el mensaje `'Código no válido'`.
+
+2. Modifica el componente `PanelCarrito` para mostrar:
+   - Un input para introducir el código.
+   - El precio con descuento aplicado.
+
+3. Persiste el descuento en localStorage junto con `items` y `mesaId`.
+
+> **Pista:** Usa el campo `partialize` del middleware `persist` para incluir también `descuento` en los datos guardados.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 02 — Seguridad con RLS](./02-seguridad-rls.md) | [04 — Stripe y Edge Functions →](./04-stripe-y-edge-functions.md) |
+</file>
+
+<file path="docs/04-stripe-y-edge-functions.md">
+# 04 — Pagos con Stripe y Edge Functions
+
+> **Proyecto Flex** · Stack: Next.js · Supabase · Zustand · Stripe  
+> Nivel: Intermedio
+
+---
+
+## Visión general del flujo de pago
+
+```
+Cliente                  Next.js                  Supabase EF              Stripe
+   │                        │                          │                      │
+   │── Pulsar "Pagar" ──────▶│                          │                      │
+   │                        │── crear reserva (pendiente)                      │
+   │                        │── llamar EF checkout ───▶│                      │
+   │                        │                          │── crear Session ─────▶│
+   │                        │◀── { url } ─────────────│                      │
+   │◀── redirect ───────────│                          │                      │
+   │                        │                          │                      │
+   │────────────────────────────── pago en Stripe ─────────────────────────▶│
+   │                        │                          │                      │
+   │                        │                          │◀── Webhook ──────────│
+   │                        │                          │── UPDATE reserva     │
+   │                        │                          │   estado = 'pagada'  │
+   │                        │                          │── generar qr_token   │
+   │◀── redirect success ───│                          │                      │
+```
+
+**¿Por qué Edge Functions para el webhook?**  
+Las Edge Functions de Supabase corren cerca del usuario, son serverless y pueden usar la `service_role key` de forma segura (solo en el servidor). El webhook de Stripe necesita un endpoint HTTPS que valide la firma de Stripe y actualice la DB con permisos totales.
+
+---
+
+## Prerequisitos
+
+```bash
+pnpm add stripe @stripe/stripe-js
+pnpm add -g supabase  # CLI de Supabase para desplegar Edge Functions
+```
+
+Variables de entorno necesarias:
+
+```env
+# .env.local
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...          # solo servidor
+
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...             # solo servidor
+STRIPE_WEBHOOK_SECRET=whsec_...           # obtenido al registrar el webhook
+```
+
+---
+
+## 1. Edge Function: Crear Checkout Session
+
+Las Edge Functions viven en `supabase/functions/<nombre>/index.js`.
+
+```bash
+supabase functions new crear-checkout
+```
+
+```js
+// supabase/functions/crear-checkout/index.js
+import Stripe from 'https://esm.sh/stripe@14?target=deno'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2?target=deno'
+
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
+  apiVersion: '2024-04-10',
+  httpClient: Stripe.createFetchHttpClient(),  // compatibilidad con Deno
+})
+
+Deno.serve(async (req) => {
+  // Solo permitimos POST
+  if (req.method !== 'POST') {
+    return new Response('Method Not Allowed', { status: 405 })
+  }
+
+  try {
+    const { reservaId, salaId, inicio, fin, total, clienteId } = await req.json()
+
+    // Validación mínima de datos de entrada
+    if (!reservaId || !total || total <= 0) {
+      return new Response(
+        JSON.stringify({ error: 'Datos de reserva inválidos' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Creamos la Checkout Session de Stripe
+    // 'total' viene en euros, Stripe trabaja en céntimos
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            unit_amount: Math.round(total * 100),  // € → céntimos
+            product_data: {
+              name: `Reserva Sala VIP Flex · ${new Date(inicio).toLocaleDateString('es-ES')}`,
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      // Redirige al frontend cuando el pago se completa o se cancela
+      success_url: `${Deno.env.get('NEXT_PUBLIC_APP_URL')}/reserva/exito?reserva_id=${reservaId}`,
+      cancel_url:  `${Deno.env.get('NEXT_PUBLIC_APP_URL')}/reserva/cancelada`,
+      // Metadatos: los recuperamos en el webhook para identificar la reserva
+      metadata: { reserva_id: reservaId, cliente_id: clienteId },
+      // Caduca en 30 minutos (evita sesiones zombi)
+      expires_at: Math.floor(Date.now() / 1000) + 1800,
+    })
+
+    // Guardamos el stripe_session en la reserva (útil para reconciliar pagos)
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL'),
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    )
+
+    await supabase
+      .from('reservas')
+      .update({ stripe_session: session.id })
+      .eq('id', reservaId)
+
+    return new Response(
+      JSON.stringify({ url: session.url }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+
+  } catch (err) {
+    console.error('Error en crear-checkout:', err)
+    return new Response(
+      JSON.stringify({ error: err.message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+})
+```
+
+---
+
+## 2. Edge Function: Webhook de Stripe
+
+```bash
+supabase functions new stripe-webhook
+```
+
+```js
+// supabase/functions/stripe-webhook/index.js
+import Stripe from 'https://esm.sh/stripe@14?target=deno'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2?target=deno'
+import { crypto } from 'https://deno.land/std@0.208.0/crypto/mod.ts'
+
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
+  apiVersion: '2024-04-10',
+  httpClient: Stripe.createFetchHttpClient(),
+})
+
+/**
+ * Genera un token único para el QR de entrada.
+ * Usamos crypto.randomUUID() que es estándar en Deno y navegadores modernos.
+ */
+function generarQrToken() {
+  return crypto.randomUUID()
+}
+
+Deno.serve(async (req) => {
+  const signature = req.headers.get('stripe-signature')
+  const body      = await req.text()  // leer como texto para verificar firma
+
+  let evento
+  try {
+    // Verificamos que el webhook viene REALMENTE de Stripe
+    // Si la firma no cuadra, Stripe.constructEventAsync lanza un error
+    evento = await stripe.webhooks.constructEventAsync(
+      body,
+      signature,
+      Deno.env.get('STRIPE_WEBHOOK_SECRET')
+    )
+  } catch (err) {
+    console.error('Firma de webhook inválida:', err.message)
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 })
+  }
+
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL'),
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')  // bypasea RLS (correcto aquí)
+  )
+
+  // Solo nos interesan dos eventos de Stripe:
+  switch (evento.type) {
+
+    case 'checkout.session.completed': {
+      const session   = evento.data.object
+      const reservaId = session.metadata?.reserva_id
+
+      if (!reservaId) break
+
+      // Actualizamos la reserva: pagada + guardamos el Payment Intent + generamos QR
+      const { error } = await supabase
+        .from('reservas')
+        .update({
+          estado:         'pagada',
+          stripe_payment: session.payment_intent,
+          qr_token:       generarQrToken(),
+        })
+        .eq('id', reservaId)
+        .eq('estado', 'pendiente')  // seguridad extra: solo si sigue pendiente
+
+      if (error) console.error('Error actualizando reserva:', error)
+      break
+    }
+
+    case 'checkout.session.expired': {
+      // El usuario no pagó en 30 min → marcamos la reserva como cancelada
+      const session   = evento.data.object
+      const reservaId = session.metadata?.reserva_id
+
+      if (!reservaId) break
+
+      await supabase
+        .from('reservas')
+        .update({ estado: 'cancelada' })
+        .eq('id', reservaId)
+        .eq('estado', 'pendiente')
+
+      break
+    }
+
+    default:
+      // Ignoramos el resto de eventos
+      console.log(`Evento ignorado: ${evento.type}`)
+  }
+
+  // Siempre devolvemos 200 para que Stripe no reintente el envío
+  return new Response(JSON.stringify({ received: true }), {
+    headers: { 'Content-Type': 'application/json' },
+  })
+})
+```
+
+---
+
+## 3. Llamar a la Edge Function desde Next.js
+
+```js
+// app/actions/reservas.js
+'use server'
+
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+/**
+ * Server Action: crea la reserva en DB y redirige a Stripe Checkout.
+ */
+export async function iniciarPagoReserva({ salaId, inicio, fin, total }) {
+  const cookieStore = cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { cookies: { getAll: () => cookieStore.getAll() } }
+  )
+
+  // Verificar usuario autenticado
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+
+  // 1. Crear reserva en estado 'pendiente' (sin pago confirmado aún)
+  const { data: reserva, error } = await supabase
+    .from('reservas')
+    .insert({
+      sala_id:    salaId,
+      cliente_id: user.id,
+      inicio:     inicio.toISOString(),
+      fin:        fin.toISOString(),
+      total,
+      estado:     'pendiente',
+    })
+    .select()
+    .single()
+
+  if (error) throw new Error(error.message)
+
+  // 2. Llamar a la Edge Function para obtener la URL de Stripe
+  const resp = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/crear-checkout`,
+    {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({
+        reservaId:  reserva.id,
+        salaId,
+        inicio:     inicio.toISOString(),
+        fin:        fin.toISOString(),
+        total,
+        clienteId:  user.id,
+      }),
+    }
+  )
+
+  if (!resp.ok) {
+    const err = await resp.json()
+    throw new Error(err.error ?? 'Error al crear el checkout')
+  }
+
+  const { url } = await resp.json()
+  return url  // el componente redirigirá a esta URL
+}
+```
+
+```jsx
+// components/BotonPagarReserva.jsx
+'use client'
+
+import { useReservaStore } from '@/store/reservaStore'
+import { iniciarPagoReserva } from '@/app/actions/reservas'
+import { useRouter } from 'next/navigation'
+
+export default function BotonPagarReserva() {
+  const { salaSeleccionada, fechaInicio, fechaFin, resetReserva } = useReservaStore()
+  const router = useRouter()
+
+  const horas = fechaFin && fechaInicio
+    ? (fechaFin - fechaInicio) / 3600000
+    : 0
+  const total = horas * (salaSeleccionada?.precio_hora ?? 0)
+
+  async function handlePagar() {
+    try {
+      const checkoutUrl = await iniciarPagoReserva({
+        salaId: salaSeleccionada.id,
+        inicio: fechaInicio,
+        fin:    fechaFin,
+        total,
+      })
+      resetReserva()               // limpiamos el store
+      router.push(checkoutUrl)     // redirigimos a Stripe
+    } catch (err) {
+      alert(`Error: ${err.message}`)
+    }
+  }
+
+  return (
+    <button onClick={handlePagar} disabled={total <= 0}>
+      Pagar {total.toFixed(2)} € →
+    </button>
+  )
+}
+```
+
+---
+
+## 4. Desplegar las Edge Functions
+
+```bash
+# Autenticarnos con la CLI de Supabase
+supabase login
+
+# Enlazar con nuestro proyecto remoto
+supabase link --project-ref <tu-project-ref>
+
+# Configurar los secrets (variables de entorno de las EF)
+supabase secrets set STRIPE_SECRET_KEY=sk_test_...
+supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
+supabase secrets set NEXT_PUBLIC_APP_URL=https://flex.vercel.app
+
+# Desplegar ambas funciones
+supabase functions deploy crear-checkout
+supabase functions deploy stripe-webhook
+```
+
+### Registrar el webhook en Stripe
+
+1. Ve a [dashboard.stripe.com/webhooks](https://dashboard.stripe.com/webhooks)
+2. **Add endpoint**
+3. URL: `https://<tu-project-ref>.supabase.co/functions/v1/stripe-webhook`
+4. Eventos a escuchar:
+   - `checkout.session.completed`
+   - `checkout.session.expired`
+5. Copia el **Signing secret** (`whsec_...`) → `STRIPE_WEBHOOK_SECRET`
+
+### Probar el webhook en local
+
+```bash
+# Instala el CLI de Stripe
+stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook
+
+# En otra terminal, simula un pago completado
+stripe trigger checkout.session.completed
+```
+
+---
+
+## 5. Página de éxito
+
+```jsx
+// app/reserva/exito/page.jsx
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+export default async function PaginaExito({ searchParams }) {
+  const reservaId = searchParams.reserva_id
+  const cookieStore = cookies()
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { cookies: { getAll: () => cookieStore.getAll() } }
+  )
+
+  const { data: reserva } = await supabase
+    .from('reservas')
+    .select('*, salas_vip(nombre)')
+    .eq('id', reservaId)
+    .single()
+
+  if (!reserva || reserva.estado !== 'pagada') {
+    return <p>Reserva no encontrada o pago no confirmado.</p>
+  }
+
+  return (
+    <div>
+      <h1>¡Reserva confirmada! 🎸</h1>
+      <p>Sala: {reserva.salas_vip.nombre}</p>
+      <p>Inicio: {new Date(reserva.inicio).toLocaleString('es-ES')}</p>
+      <p>Total pagado: {reserva.total} €</p>
+      {/* El QR se genera en el apunte 05 */}
+      <p>Tu entrada QR estará disponible en tu perfil.</p>
+    </div>
+  )
+}
+```
+
+---
+
+## Reto Flex 🎸
+
+1. Añade soporte para **reembolsos parciales**: si el cliente cancela con más de 24 horas de antelación, Stripe devuelve el 50% del importe. Necesitarás:
+   - Una nueva Edge Function `cancelar-reserva` que calcule el tiempo restante y llame a `stripe.refunds.create`.
+   - Actualizar el estado de la reserva a `cancelada` en la DB.
+
+2. Maneja el evento `charge.refunded` en el webhook para registrar en DB que el reembolso se ha procesado.
+
+> **Pista:** `stripe.refunds.create({ payment_intent: '...', amount: importeEnCentimos })` acepta el Payment Intent ID que guardamos en `reservas.stripe_payment`.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 03 — Estado con Zustand](./03-estado-con-zustand.md) | [05 — PWA y Entradas QR →](./05-pwa-y-entradas-qr.md) |
+</file>
+
+<file path="docs/05-pwa-y-entradas-qr.md">
+# 05 — PWA y Entradas QR
+
+> **Proyecto Flex** · Stack: Next.js · Supabase · Zustand · Stripe  
+> Nivel: Intermedio
+
+---
+
+## ¿Por qué una PWA?
+
+Una Progressive Web App (PWA) es una web que se comporta como una app nativa:
+
+- Se puede instalar en el móvil desde el navegador (sin App Store)
+- Funciona offline (con Service Worker)
+- Envía notificaciones push
+- Aparece en la pantalla de inicio con su icono
+
+Para Flex es perfecta: el cliente accede a su entrada QR desde el móvil, sin tener que descargar nada.
+
+```
+Web normal:   Cliente ──▶ Abre el navegador cada vez
+PWA:          Cliente ──▶ Icono en pantalla de inicio ──▶ Experiencia de app
+```
+
+---
+
+## 1. Convertir Next.js en PWA
+
+### 1.1 Instalar `next-pwa`
+
+```bash
+pnpm add next-pwa
+```
+
+### 1.2 Configurar `next.config.js`
+
+```js
+// next.config.js
+const withPWA = require('next-pwa')({
+  dest: 'public',          // dónde genera el Service Worker
+  disable: process.env.NODE_ENV === 'development',  // no en dev (rompe hot reload)
+  register: true,          // registra el SW automáticamente
+  skipWaiting: true,       // activa el nuevo SW sin esperar a cerrar pestañas
+  // Rutas que SÍ queremos cachear offline
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/.*\.supabase\.co\/storage\/.*/i,
+      handler: 'CacheFirst',           // primero caché, luego red
+      options: {
+        cacheName: 'supabase-storage',
+        expiration: { maxEntries: 50, maxAgeSeconds: 7 * 24 * 60 * 60 },
+      },
+    },
+    {
+      urlPattern: /^\//,               // rutas internas de la app
+      handler: 'NetworkFirst',         // primero red, caché como fallback
+      options: { cacheName: 'flex-pages' },
+    },
+  ],
+})
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // ...tu configuración existente
+}
+
+module.exports = withPWA(nextConfig)
+```
+
+### 1.3 Web App Manifest (`public/manifest.json`)
+
+El manifest le dice al navegador cómo instalar la PWA:
+
+```json
+{
+  "name": "Flex Underground",
+  "short_name": "Flex",
+  "description": "Tu sala de Jam Sessions en el bolsillo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e63946",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
+```
+
+### 1.4 Enlazar el manifest en el layout
+
+```jsx
+// app/layout.jsx
+export const metadata = {
+  title: 'Flex Underground',
+  description: 'Tu sala de Jam Sessions',
+  manifest: '/manifest.json',
+  themeColor: '#e63946',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Flex',
+  },
+}
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="es">
+      <head>
+        {/* iOS necesita esto para el icono en pantalla de inicio */}
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+---
+
+## 2. Generación del código QR
+
+### ¿Qué contiene el QR?
+
+El QR no contiene datos sensibles directamente. Contiene una **URL** que apunta a la entrada:
+
+```
+https://flex.vercel.app/entrada/<qr_token>
+```
+
+El `qr_token` es el UUID único que generó el webhook de Stripe (apunte 04). El portero escanea el QR y la app verifica en Supabase si el token es válido.
+
+### 2.1 Instalar la librería QR
+
+```bash
+pnpm add qrcode
+```
+
+### 2.2 Componente `EntradaQR`
+
+```jsx
+// components/EntradaQR.jsx
+'use client'
+
+import { useEffect, useRef } from 'react'
+import QRCode from 'qrcode'
+
+/**
+ * Renderiza un código QR en un canvas.
+ * @param {string} props.token  - El qr_token de la reserva
+ * @param {string} props.appUrl - La URL base de la app
+ */
+export default function EntradaQR({ token, appUrl }) {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    if (!token || !canvasRef.current) return
+
+    const url = `${appUrl}/entrada/${token}`
+
+    QRCode.toCanvas(canvasRef.current, url, {
+      width:           250,
+      margin:          2,
+      color: {
+        dark:  '#ffffff',   // módulos del QR (blanco sobre fondo oscuro)
+        light: '#0a0a0a',   // fondo del QR
+      },
+    }, (err) => {
+      if (err) console.error('Error generando QR:', err)
+    })
+  }, [token, appUrl])
+
+  return (
+    <div className="entrada-qr">
+      <canvas ref={canvasRef} aria-label="Código QR de entrada" />
+      <p className="qr-hint">Muestra este QR en la puerta de la sala VIP</p>
+    </div>
+  )
+}
+```
+
+### 2.3 Página de la entrada (`/entrada/[token]`)
+
+```jsx
+// app/entrada/[token]/page.jsx
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import EntradaQR from '@/components/EntradaQR'
+
+export default async function PaginaEntrada({ params }) {
+  const { token } = params
+  const cookieStore = cookies()
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { cookies: { getAll: () => cookieStore.getAll() } }
+  )
+
+  // Buscamos la reserva por qr_token
+  const { data: reserva } = await supabase
+    .from('reservas')
+    .select(`
+      id,
+      inicio,
+      fin,
+      estado,
+      total,
+      qr_token,
+      salas_vip ( nombre, imagen_url ),
+      perfiles  ( nombre )
+    `)
+    .eq('qr_token', token)
+    .single()
+
+  // Token inválido o reserva no pagada
+  if (!reserva || reserva.estado !== 'pagada') {
+    return (
+      <div className="entrada-invalida">
+        <h1>Entrada no válida</h1>
+        <p>Este código QR no corresponde a ninguna reserva activa.</p>
+      </div>
+    )
+  }
+
+  const ahora   = new Date()
+  const inicio  = new Date(reserva.inicio)
+  const fin     = new Date(reserva.fin)
+  const valida  = ahora >= inicio && ahora <= fin
+
+  return (
+    <div className="entrada-container">
+      <h1>Entrada Flex 🎸</h1>
+
+      <div className="entrada-info">
+        <img src={reserva.salas_vip.imagen_url} alt={reserva.salas_vip.nombre} />
+        <h2>{reserva.salas_vip.nombre}</h2>
+        <p>Titular: {reserva.perfiles.nombre}</p>
+        <p>Entrada: {inicio.toLocaleString('es-ES')}</p>
+        <p>Salida:  {fin.toLocaleString('es-ES')}</p>
+        <p>Total pagado: {reserva.total} €</p>
+      </div>
+
+      {/* Estado visual de la entrada */}
+      <div className={`estado-entrada ${valida ? 'valida' : 'fuera-de-rango'}`}>
+        {valida ? '✅ ENTRADA VÁLIDA' : '⚠️ FUERA DEL HORARIO'}
+      </div>
+
+      {/* El QR muestra la URL pública de esta misma página */}
+      <EntradaQR
+        token={token}
+        appUrl={process.env.NEXT_PUBLIC_APP_URL}
+      />
+    </div>
+  )
+}
+```
+
+### 2.4 Página de perfil del usuario (acceso a sus entradas)
+
+```jsx
+// app/perfil/page.jsx
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
+
+export default async function PaginaPerfil() {
+  const cookieStore = cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { cookies: { getAll: () => cookieStore.getAll() } }
+  )
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  // Solo reservas pagadas (tienen QR)
+  const { data: reservas } = await supabase
+    .from('reservas')
+    .select('id, inicio, fin, qr_token, salas_vip(nombre)')
+    .eq('cliente_id', user.id)
+    .eq('estado', 'pagada')
+    .order('inicio', { ascending: false })
+
+  return (
+    <div>
+      <h1>Mis entradas</h1>
+      {reservas?.length === 0 && <p>No tienes reservas pagadas.</p>}
+      {reservas?.map((reserva) => (
+        <div key={reserva.id} className="tarjeta-entrada">
+          <h3>{reserva.salas_vip.nombre}</h3>
+          <p>{new Date(reserva.inicio).toLocaleString('es-ES')}</p>
+          {/* Enlace a la página de entrada con el QR */}
+          <Link href={`/entrada/${reserva.qr_token}`}>
+            Ver entrada QR →
+          </Link>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+---
+
+## 3. Edge Function: Verificar QR (para el portero)
+
+El portero usa una app interna que escanea el QR y llama a esta Edge Function.
+
+```bash
+supabase functions new verificar-entrada
+```
+
+```js
+// supabase/functions/verificar-entrada/index.js
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2?target=deno'
+
+Deno.serve(async (req) => {
+  if (req.method !== 'POST') {
+    return new Response('Method Not Allowed', { status: 405 })
+  }
+
+  const { token } = await req.json()
+
+  if (!token) {
+    return new Response(
+      JSON.stringify({ valida: false, motivo: 'Token no proporcionado' }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL'),
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+  )
+
+  const { data: reserva } = await supabase
+    .from('reservas')
+    .select('id, inicio, fin, estado, perfiles(nombre), salas_vip(nombre)')
+    .eq('qr_token', token)
+    .single()
+
+  if (!reserva) {
+    return new Response(
+      JSON.stringify({ valida: false, motivo: 'Token no encontrado' }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  if (reserva.estado !== 'pagada') {
+    return new Response(
+      JSON.stringify({ valida: false, motivo: `Estado: ${reserva.estado}` }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  const ahora  = new Date()
+  const inicio = new Date(reserva.inicio)
+  const fin    = new Date(reserva.fin)
+
+  // Permitimos entrada 15 minutos antes del inicio
+  const margenMs = 15 * 60 * 1000
+  const dentroDeRango = ahora >= new Date(inicio - margenMs) && ahora <= fin
+
+  if (!dentroDeRango) {
+    return new Response(
+      JSON.stringify({
+        valida: false,
+        motivo: 'Fuera del horario de la reserva',
+        inicio: inicio.toISOString(),
+        fin:    fin.toISOString(),
+      }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  // Entrada válida: marcamos la reserva como 'completada'
+  await supabase
+    .from('reservas')
+    .update({ estado: 'completada' })
+    .eq('id', reserva.id)
+
+  return new Response(
+    JSON.stringify({
+      valida:   true,
+      cliente:  reserva.perfiles.nombre,
+      sala:     reserva.salas_vip.nombre,
+      inicio:   inicio.toISOString(),
+      fin:      fin.toISOString(),
+    }),
+    { headers: { 'Content-Type': 'application/json' } }
+  )
+})
+```
+
+---
+
+## 4. Verificar que es una PWA instalable
+
+Abre Chrome DevTools → pestaña **Application** → **Manifest**.
+
+Debe mostrar:
+- ✅ Manifest válido
+- ✅ Service Worker registrado
+- ✅ Al menos un icono de 192×192
+
+En móvil (Chrome), aparecerá el banner "Añadir a pantalla de inicio" automáticamente si:
+- La web se sirve por HTTPS
+- El manifest está correctamente enlazado
+- El Service Worker está activo
+
+---
+
+## Reto Flex 🎸
+
+1. Añade al componente `EntradaQR` un botón **"Descargar QR"** que use `canvas.toDataURL('image/png')` para crear un enlace de descarga con el QR en alta resolución (512×512 px).
+
+2. Crea una ruta `/portero` (protegida por rol `portero`) con un formulario donde el portero pueda **escribir manualmente** el token si el escáner falla, y llame a la Edge Function `verificar-entrada`. Muestra el resultado con un indicador visual verde/rojo.
+
+3. Configura en `manifest.json` un `shortcut` de acceso rápido a `/perfil` para que los usuarios con la PWA instalada puedan acceder directamente a sus entradas desde el icono.
+
+> **Pista:** Los shortcuts del manifest se definen así:
+> ```json
+> "shortcuts": [{ "name": "Mis entradas", "url": "/perfil", "icons": [...] }]
+> ```
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 04 — Stripe y Edge Functions](./04-stripe-y-edge-functions.md) | [06 — Realtime y Vercel →](./06-realtime-y-vercel.md) |
+</file>
+
+<file path="docs/06-realtime-y-vercel.md">
+# 06 — Panel del Camarero con Realtime y Despliegue en Vercel
+
+> **Proyecto Flex** · Stack: Next.js · Supabase · Zustand · Stripe  
+> Nivel: Intermedio
+
+---
+
+## ¿Por qué Supabase Realtime?
+
+Sin Realtime, el camarero tendría que recargar la página para ver pedidos nuevos. Con Realtime, Supabase abre una conexión WebSocket y **empuja los cambios** de la DB directamente al navegador.
+
+```
+Sin Realtime:
+  Camarero ──▶ Recarga página ──▶ SELECT pedidos ──▶ DB
+  (manual, lento, propenso a errores)
+
+Con Realtime:
+  DB cambia ──▶ Supabase Realtime ──▶ WebSocket ──▶ Camarero
+  (automático, inmediato, sin recargar)
+```
+
+Supabase Realtime escucha cambios a nivel de tabla usando el mecanismo de **replicación lógica** de PostgreSQL. Solo necesitamos habilitarlo en las tablas que nos interesan.
+
+---
+
+## 1. Habilitar Realtime en la tabla `pedidos`
+
+```sql
+-- En el SQL Editor de Supabase:
+-- Añade la tabla 'pedidos' a la publicación de replicación de Realtime
+alter publication supabase_realtime add table public.pedidos;
+alter publication supabase_realtime add table public.pedido_items;
+```
+
+> También puedes hacerlo desde el Dashboard: **Database → Replication → supabase_realtime** → activa los toggles de `pedidos` y `pedido_items`.
+
+---
+
+## 2. Store Zustand para el panel del camarero
+
+```js
+// store/panelStore.js
+import { create } from 'zustand'
+
+/**
+ * Store para el panel del camarero.
+ * Gestiona la lista de pedidos activos y la suscripción Realtime.
+ * No persistimos en localStorage: el camarero siempre ve el estado en vivo.
+ */
+export const usePanelStore = create((set, get) => ({
+  // ─── Estado ─────────────────────────────────────────────────────
+  pedidos:     [],           // array de pedidos activos con sus items
+  cargando:    true,
+  error:       null,
+  canal:       null,         // referencia al canal Realtime (para desuscribirse)
+  filtroEstado: 'pendiente', // qué estado mostrar: 'pendiente'|'en_barra'|'listo'
+
+  // ─── Acciones ───────────────────────────────────────────────────
+
+  setFiltroEstado(estado) {
+    set({ filtroEstado: estado })
+  },
+
+  /**
+   * Carga los pedidos iniciales desde Supabase.
+   * Se llama una vez al montar el panel.
+   */
+  async cargarPedidos(supabase, piso) {
+    set({ cargando: true, error: null })
+
+    const { data, error } = await supabase
+      .from('pedidos')
+      .select(`
+        id,
+        estado,
+        total,
+        creado_en,
+        mesas ( numero, piso ),
+        pedido_items (
+          cantidad,
+          precio_unit,
+          productos ( nombre )
+        )
+      `)
+      .in('estado', ['pendiente', 'en_barra', 'listo'])
+      .eq('mesas.piso', piso)       // solo el piso del camarero
+      .order('creado_en', { ascending: true })
+
+    if (error) {
+      set({ error: error.message, cargando: false })
+      return
+    }
+
+    set({ pedidos: data ?? [], cargando: false })
+  },
+
+  /**
+   * Suscribe el panel a cambios en 'pedidos' via Realtime.
+   * Devuelve una función de cleanup para desuscribirse.
+   */
+  suscribir(supabase, piso) {
+    const canal = supabase
+      .channel(`panel-camarero-piso-${piso}`)
+      // Escucha INSERT: pedido nuevo
+      .on(
+        'postgres_changes',
+        {
+          event:  'INSERT',
+          schema: 'public',
+          table:  'pedidos',
+        },
+        async (payload) => {
+          const nuevoPedido = payload.new
+
+          // Enriquecemos el pedido con sus relaciones (el payload no las incluye)
+          const { data } = await supabase
+            .from('pedidos')
+            .select(`
+              id, estado, total, creado_en,
+              mesas ( numero, piso ),
+              pedido_items ( cantidad, precio_unit, productos ( nombre ) )
+            `)
+            .eq('id', nuevoPedido.id)
+            .single()
+
+          if (!data || data.mesas?.piso !== piso) return
+
+          set((estado) => ({ pedidos: [...estado.pedidos, data] }))
+        }
+      )
+      // Escucha UPDATE: cambio de estado del pedido
+      .on(
+        'postgres_changes',
+        {
+          event:  'UPDATE',
+          schema: 'public',
+          table:  'pedidos',
+        },
+        (payload) => {
+          const actualizado = payload.new
+
+          set((estado) => ({
+            pedidos: estado.pedidos
+              // Si el pedido pasa a 'entregado' o 'cancelado', lo quitamos del panel
+              .filter((p) => {
+                if (p.id !== actualizado.id) return true
+                return !['entregado', 'cancelado'].includes(actualizado.estado)
+              })
+              // Si sigue activo, actualizamos su estado
+              .map((p) =>
+                p.id === actualizado.id ? { ...p, estado: actualizado.estado } : p
+              ),
+          }))
+        }
+      )
+      .subscribe()
+
+    set({ canal })
+
+    // Devuelve la función de cleanup
+    return () => {
+      supabase.removeChannel(canal)
+      set({ canal: null })
+    }
+  },
+
+  /**
+   * Actualiza el estado de un pedido (staff/admin).
+   */
+  async cambiarEstado(supabase, pedidoId, nuevoEstado) {
+    const { error } = await supabase
+      .from('pedidos')
+      .update({ estado: nuevoEstado, actualizado: new Date().toISOString() })
+      .eq('id', pedidoId)
+
+    if (error) console.error('Error actualizando estado:', error)
+    // El UPDATE de Supabase Realtime actualizará la lista automáticamente
+  },
+}))
+```
+
+---
+
+## 3. Componente Panel del Camarero
+
+```jsx
+// components/PanelCamarero.jsx
+'use client'
+
+import { useEffect } from 'react'
+import { createClient } from '@supabase/supabase-js'
+import { usePanelStore } from '@/store/panelStore'
+
+const ESTADOS_SIGUIENTES = {
+  pendiente: 'en_barra',
+  en_barra:  'listo',
+  listo:     'entregado',
+}
+
+const ETIQUETAS_ESTADO = {
+  pendiente: '🕐 Pendiente',
+  en_barra:  '🍺 En barra',
+  listo:     '✅ Listo',
+  entregado: '📦 Entregado',
+}
+
+export default function PanelCamarero({ piso }) {
+  const {
+    pedidos,
+    cargando,
+    error,
+    filtroEstado,
+    setFiltroEstado,
+    cargarPedidos,
+    suscribir,
+    cambiarEstado,
+  } = usePanelStore()
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+
+  useEffect(() => {
+    // Carga inicial
+    cargarPedidos(supabase, piso)
+
+    // Suscripción Realtime
+    const desuscribir = suscribir(supabase, piso)
+
+    // Cleanup: se ejecuta cuando el componente se desmonta
+    return desuscribir
+  }, [piso])  // si cambia el piso, recarga y resuscribe
+
+  const pedidosFiltrados = pedidos.filter((p) => p.estado === filtroEstado)
+
+  if (cargando) return <p>Cargando pedidos...</p>
+  if (error)    return <p>Error: {error}</p>
+
+  return (
+    <div className="panel-camarero">
+      <h1>Panel Camarero — Piso {piso}</h1>
+
+      {/* Filtros por estado */}
+      <div className="filtros">
+        {['pendiente', 'en_barra', 'listo'].map((estado) => (
+          <button
+            key={estado}
+            onClick={() => setFiltroEstado(estado)}
+            className={filtroEstado === estado ? 'activo' : ''}
+          >
+            {ETIQUETAS_ESTADO[estado]}
+            {/* Badge con el número de pedidos en ese estado */}
+            <span className="badge">
+              {pedidos.filter((p) => p.estado === estado).length}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Lista de pedidos */}
+      {pedidosFiltrados.length === 0 ? (
+        <p>No hay pedidos {filtroEstado}.</p>
+      ) : (
+        <div className="lista-pedidos">
+          {pedidosFiltrados.map((pedido) => (
+            <TarjetaPedido
+              key={pedido.id}
+              pedido={pedido}
+              onCambiarEstado={(nuevoEstado) =>
+                cambiarEstado(supabase, pedido.id, nuevoEstado)
+              }
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function TarjetaPedido({ pedido, onCambiarEstado }) {
+  const estadoSiguiente = ESTADOS_SIGUIENTES[pedido.estado]
+  const tiempoEspera    = Math.floor(
+    (Date.now() - new Date(pedido.creado_en)) / 60000
+  )
+
+  return (
+    <div className={`tarjeta-pedido estado-${pedido.estado}`}>
+      <div className="cabecera">
+        <strong>Mesa {pedido.mesas?.numero}</strong>
+        <span className={`tiempo ${tiempoEspera > 10 ? 'urgente' : ''}`}>
+          {tiempoEspera} min
+        </span>
+      </div>
+
+      <ul className="items">
+        {pedido.pedido_items?.map((item, i) => (
+          <li key={i}>
+            {item.cantidad}× {item.productos?.nombre}
+          </li>
+        ))}
+      </ul>
+
+      <div className="pie">
+        <span>{pedido.total?.toFixed(2)} €</span>
+        {estadoSiguiente && (
+          <button onClick={() => onCambiarEstado(estadoSiguiente)}>
+            Marcar como {ETIQUETAS_ESTADO[estadoSiguiente]}
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## 4. Ruta del panel (protegida por rol)
+
+```jsx
+// app/panel/page.jsx
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import PanelCamarero from '@/components/PanelCamarero'
+
+export default async function PaginaPanel() {
+  const cookieStore = cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    { cookies: { getAll: () => cookieStore.getAll() } }
+  )
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  const { data: perfil } = await supabase
+    .from('perfiles')
+    .select('rol')
+    .eq('id', user.id)
+    .single()
+
+  if (!perfil || !['staff', 'admin'].includes(perfil.rol)) {
+    redirect('/')  // clientes no tienen acceso al panel
+  }
+
+  // El piso del camarero podría estar en su perfil.
+  // Por ahora asignamos piso 1 por defecto (ver Reto Flex).
+  return <PanelCamarero piso={1} />
+}
+```
+
+---
+
+## 5. Despliegue en Vercel
+
+### 5.1 Preparar el repositorio
+
+```bash
+# Asegúrate de tener un .gitignore correcto
+echo ".env.local" >> .gitignore
+echo ".env*.local" >> .gitignore
+
+git add .
+git commit -m "feat: proyecto Flex inicial"
+git push origin main
+```
+
+### 5.2 Conectar con Vercel
+
+1. Ve a [vercel.com](https://vercel.com) → **Add New Project**
+2. Importa tu repositorio de GitHub
+3. Framework: **Next.js** (Vercel lo detecta solo)
+4. Click en **Deploy** (la primera vez fallará porque faltan las variables de entorno)
+
+### 5.3 Variables de entorno en Vercel
+
+Ve a tu proyecto → **Settings → Environment Variables** y añade:
+
+| Variable                              | Valor                              | Entornos              |
+|---------------------------------------|------------------------------------|-----------------------|
+| `NEXT_PUBLIC_SUPABASE_URL`            | `https://xxxx.supabase.co`        | Production, Preview   |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`       | `eyJ...`                           | Production, Preview   |
+| `SUPABASE_SERVICE_ROLE_KEY`           | `eyJ...`                           | Production, Preview   |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`  | `pk_live_...` / `pk_test_...`      | Production / Preview  |
+| `STRIPE_SECRET_KEY`                   | `sk_live_...` / `sk_test_...`      | Production / Preview  |
+| `STRIPE_WEBHOOK_SECRET`               | `whsec_...`                        | Production, Preview   |
+| `NEXT_PUBLIC_APP_URL`                 | `https://flex.vercel.app`          | Production            |
+| `NEXT_PUBLIC_APP_URL`                 | `https://flex-git-main-....vercel.app` | Preview          |
+
+> **Importante:** Las variables `NEXT_PUBLIC_*` son accesibles en el cliente (navegador). Las demás solo en el servidor. Nunca pongas `STRIPE_SECRET_KEY` ni `SUPABASE_SERVICE_ROLE_KEY` con el prefijo `NEXT_PUBLIC_`.
+
+### 5.4 Re-desplegar tras añadir variables
+
+```
+Vercel Dashboard → tu proyecto → Deployments → ... → Redeploy
+```
+
+O simplemente haz un nuevo `git push` con cualquier cambio mínimo.
+
+### 5.5 Actualizar las URLs del webhook de Stripe
+
+Con la app desplegada en `https://flex.vercel.app`, actualiza el endpoint en Stripe:
+
+```
+https://flex.vercel.app   ← ya no es localhost
+```
+
+Y en los secrets de Supabase:
+
+```bash
+supabase secrets set NEXT_PUBLIC_APP_URL=https://flex.vercel.app
+supabase functions deploy crear-checkout
+supabase functions deploy stripe-webhook
+supabase functions deploy verificar-entrada
+```
+
+---
+
+## 6. Configurar Supabase Auth para la URL de producción
+
+En el Dashboard de Supabase → **Authentication → URL Configuration**:
+
+```
+Site URL:         https://flex.vercel.app
+Redirect URLs:    https://flex.vercel.app/**
+                  http://localhost:3000/**    ← para desarrollo local
+```
+
+Sin esto, el login con OAuth o magic links redirige a la URL incorrecta.
+
+---
+
+## 7. Checklist de despliegue
+
+```
+□ Variables de entorno añadidas en Vercel
+□ Site URL y Redirect URLs actualizados en Supabase Auth
+□ Buckets de Storage creados y políticas aplicadas
+□ Edge Functions desplegadas con los secrets correctos
+□ Webhook de Stripe apuntando a la URL de producción
+□ Realtime habilitado en tablas 'pedidos' y 'pedido_items'
+□ PWA: manifest.json accesible en /manifest.json (status 200)
+□ HTTPS activo (Vercel lo gestiona automáticamente)
+```
+
+---
+
+## Reto Flex 🎸
+
+1. Añade el campo `piso` al perfil del staff en la tabla `perfiles` (columna `piso_asignado smallint`). Modifica la página `/panel` para que el camarero vea automáticamente los pedidos del piso que tiene asignado en su perfil.
+
+2. Implementa una **notificación sonora** en el panel: cuando llegue un pedido nuevo via Realtime, reproduce un sonido de notificación usando la Web Audio API:
+   ```js
+   const ctx = new AudioContext()
+   const osc = ctx.createOscillator()
+   osc.connect(ctx.destination)
+   osc.start()
+   osc.stop(ctx.currentTime + 0.2)
+   ```
+
+3. Añade en Vercel un entorno de **Preview** diferente al de Production: usa las claves `pk_test_` de Stripe en Preview y `pk_live_` en Production. Configura los valores por entorno desde el Dashboard de Vercel.
+
+> **Pista:** Vercel permite definir valores distintos para la misma variable según el entorno (Production / Preview / Development) directamente desde la interfaz de variables de entorno.
+
+---
+
+## Navegación
+
+| | |
+|---|---|
+| [← 05 — PWA y Entradas QR](./05-pwa-y-entradas-qr.md) | |
+</file>
+
+<file path="supabase/.gitignore">
+# Supabase
+.branches
+.temp
+
+# dotenvx
+.env.keys
+.env.local
+.env.*.local
+</file>
+
+<file path="supabase/config.toml">
+# For detailed configuration reference documentation, visit:
+# https://supabase.com/docs/guides/local-development/cli/config
+# A string used to distinguish different Supabase projects on the same host. Defaults to the
+# working directory name when running `supabase init`.
+project_id = "flex"
+
+[api]
+enabled = true
+# Port to use for the API URL.
+port = 57321
+# Schemas to expose in your API. Tables, views and stored procedures in this schema will get API
+# endpoints. `public` and `graphql_public` schemas are included by default.
+schemas = ["public", "graphql_public"]
+# Extra schemas to add to the search_path of every request.
+extra_search_path = ["public", "extensions"]
+# The maximum number of rows returns from a view, table, or stored procedure. Limits payload size
+# for accidental or malicious requests.
+max_rows = 1000
+
+[api.tls]
+# Enable HTTPS endpoints locally using a self-signed certificate.
+enabled = false
+# Paths to self-signed certificate pair.
+# cert_path = "../certs/my-cert.pem"
+# key_path = "../certs/my-key.pem"
+
+[db]
+# Port to use for the local database URL.
+port = 57322
+# Port used by db diff command to initialize the shadow database.
+shadow_port = 57320
+# Maximum amount of time to wait for health check when starting the local database.
+health_timeout = "2m"
+# The database major version to use. This has to be the same as your remote database's. Run `SHOW
+# server_version;` on the remote database to check.
+major_version = 17
+
+[db.pooler]
+enabled = false
+# Port to use for the local connection pooler.
+port = 57329
+# Specifies when a server connection can be reused by other clients.
+# Configure one of the supported pooler modes: `transaction`, `session`.
+pool_mode = "transaction"
+# How many server connections to allow per user/database pair.
+default_pool_size = 20
+# Maximum number of client connections allowed.
+max_client_conn = 100
+
+# [db.vault]
+# secret_key = "env(SECRET_VALUE)"
+
+[db.migrations]
+# If disabled, migrations will be skipped during a db push or reset.
+enabled = true
+# Specifies an ordered list of schema files that describe your database.
+# Supports glob patterns relative to supabase directory: "./schemas/*.sql"
+schema_paths = []
+
+[db.seed]
+# If enabled, seeds the database after migrations during a db reset.
+enabled = true
+# Specifies an ordered list of seed files to load during db reset.
+# Supports glob patterns relative to supabase directory: "./seeds/*.sql"
+sql_paths = ["./seed.sql"]
+
+[db.network_restrictions]
+# Enable management of network restrictions.
+enabled = false
+# List of IPv4 CIDR blocks allowed to connect to the database.
+# Defaults to allow all IPv4 connections. Set empty array to block all IPs.
+allowed_cidrs = ["0.0.0.0/0"]
+# List of IPv6 CIDR blocks allowed to connect to the database.
+# Defaults to allow all IPv6 connections. Set empty array to block all IPs.
+allowed_cidrs_v6 = ["::/0"]
+
+# Uncomment to reject non-secure connections to the database.
+# [db.ssl_enforcement]
+# enabled = true
+
+[realtime]
+enabled = true
+# Bind realtime via either IPv4 or IPv6. (default: IPv4)
+# ip_version = "IPv6"
+# The maximum length in bytes of HTTP request headers. (default: 4096)
+# max_header_length = 4096
+
+[studio]
+enabled = true
+# Port to use for Supabase Studio.
+port = 57323
+# External URL of the API server that frontend connects to.
+api_url = "http://127.0.0.1"
+# OpenAI API Key to use for Supabase AI in the Supabase Studio.
+openai_api_key = "env(OPENAI_API_KEY)"
+
+# Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+# are monitored, and you can view the emails that would have been sent from the web interface.
+[inbucket]
+enabled = true
+# Port to use for the email testing server web interface.
+port = 57324
+# Uncomment to expose additional ports for testing user applications that send emails.
+# smtp_port = 57325
+# pop3_port = 57326
+# admin_email = "admin@email.com"
+# sender_name = "Admin"
+
+[storage]
+enabled = true
+# The maximum file size allowed (e.g. "5MB", "500KB").
+file_size_limit = "50MiB"
+
+# Uncomment to configure local storage buckets
+# [storage.buckets.images]
+# public = false
+# file_size_limit = "50MiB"
+# allowed_mime_types = ["image/png", "image/jpeg"]
+# objects_path = "./images"
+
+# Allow connections via S3 compatible clients
+[storage.s3_protocol]
+enabled = true
+
+# Image transformation API is available to Supabase Pro plan.
+# [storage.image_transformation]
+# enabled = true
+
+# Store analytical data in S3 for running ETL jobs over Iceberg Catalog
+# This feature is only available on the hosted platform.
+[storage.analytics]
+enabled = false
+max_namespaces = 5
+max_tables = 10
+max_catalogs = 2
+
+# Analytics Buckets is available to Supabase Pro plan.
+# [storage.analytics.buckets.my-warehouse]
+
+# Store vector embeddings in S3 for large and durable datasets
+# This feature is only available on the hosted platform.
+[storage.vector]
+enabled = false
+max_buckets = 10
+max_indexes = 5
+
+# Vector Buckets is available to Supabase Pro plan.
+# [storage.vector.buckets.documents-openai]
+
+[auth]
+enabled = true
+# The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
+# in emails.
+site_url = "http://127.0.0.1:3000"
+# The public URL that Auth serves on. Defaults to the API external URL with `/auth/v1` appended.
+# external_url = ""
+# A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
+additional_redirect_urls = ["https://127.0.0.1:3000"]
+# How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
+jwt_expiry = 3600
+# JWT issuer URL. If not set, defaults to auth.external_url.
+# jwt_issuer = ""
+# Path to JWT signing key. DO NOT commit your signing keys file to git.
+# signing_keys_path = "./signing_keys.json"
+# If disabled, the refresh token will never expire.
+enable_refresh_token_rotation = true
+# Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
+# Requires enable_refresh_token_rotation = true.
+refresh_token_reuse_interval = 10
+# Allow/disallow new user signups to your project.
+enable_signup = true
+# Allow/disallow anonymous sign-ins to your project.
+enable_anonymous_sign_ins = false
+# Allow/disallow testing manual linking of accounts
+enable_manual_linking = false
+# Passwords shorter than this value will be rejected as weak. Minimum 6, recommended 8 or more.
+minimum_password_length = 6
+# Passwords that do not meet the following requirements will be rejected as weak. Supported values
+# are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
+password_requirements = ""
+
+# Configure passkey sign-ins.
+# [auth.passkey]
+# enabled = false
+
+# Configure WebAuthn relying party settings (required when passkey is enabled).
+# [auth.webauthn]
+# rp_display_name = "Supabase"
+# rp_id = "localhost"
+# rp_origins = ["http://127.0.0.1:3000"]
+
+[auth.rate_limit]
+# Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
+email_sent = 2
+# Number of SMS messages that can be sent per hour. Requires auth.sms to be enabled.
+sms_sent = 30
+# Number of anonymous sign-ins that can be made per hour per IP address. Requires enable_anonymous_sign_ins = true.
+anonymous_users = 30
+# Number of sessions that can be refreshed in a 5 minute interval per IP address.
+token_refresh = 150
+# Number of sign up and sign-in requests that can be made in a 5 minute interval per IP address (excludes anonymous users).
+sign_in_sign_ups = 30
+# Number of OTP / Magic link verifications that can be made in a 5 minute interval per IP address.
+token_verifications = 30
+# Number of Web3 logins that can be made in a 5 minute interval per IP address.
+web3 = 30
+
+# Configure one of the supported captcha providers: `hcaptcha`, `turnstile`.
+# [auth.captcha]
+# enabled = true
+# provider = "hcaptcha"
+# secret = ""
+
+[auth.email]
+# Allow/disallow new user signups via email to your project.
+enable_signup = true
+# If enabled, a user will be required to confirm any email change on both the old, and new email
+# addresses. If disabled, only the new email is required to confirm.
+double_confirm_changes = true
+# If enabled, users need to confirm their email address before signing in.
+enable_confirmations = false
+# If enabled, users will need to reauthenticate or have logged in recently to change their password.
+secure_password_change = false
+# Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
+max_frequency = "1s"
+# Number of characters used in the email OTP.
+otp_length = 6
+# Number of seconds before the email OTP expires (defaults to 1 hour).
+otp_expiry = 3600
+
+# Use a production-ready SMTP server
+# [auth.email.smtp]
+# enabled = true
+# host = "smtp.sendgrid.net"
+# port = 587
+# user = "apikey"
+# pass = "env(SENDGRID_API_KEY)"
+# admin_email = "admin@email.com"
+# sender_name = "Admin"
+
+# Uncomment to customize email template
+# [auth.email.template.invite]
+# subject = "You have been invited"
+# content_path = "./supabase/templates/invite.html"
+
+# Uncomment to customize notification email template
+# [auth.email.notification.password_changed]
+# enabled = true
+# subject = "Your password has been changed"
+# content_path = "./templates/password_changed_notification.html"
+
+[auth.sms]
+# Allow/disallow new user signups via SMS to your project.
+enable_signup = false
+# If enabled, users need to confirm their phone number before signing in.
+enable_confirmations = false
+# Template for sending OTP to users
+template = "Your code is {{ .Code }}"
+# Controls the minimum amount of time that must pass before sending another sms otp.
+max_frequency = "5s"
+
+# Use pre-defined map of phone number to OTP for testing.
+# [auth.sms.test_otp]
+# 4152127777 = "123456"
+
+# Configure logged in session timeouts.
+# [auth.sessions]
+# Force log out after the specified duration.
+# timebox = "24h"
+# Force log out if the user has been inactive longer than the specified duration.
+# inactivity_timeout = "8h"
+
+# This hook runs before a new user is created and allows developers to reject the request based on the incoming user object.
+# [auth.hook.before_user_created]
+# enabled = true
+# uri = "pg-functions://postgres/auth/before-user-created-hook"
+
+# This hook runs before a token is issued and allows you to add additional claims based on the authentication method used.
+# [auth.hook.custom_access_token]
+# enabled = true
+# uri = "pg-functions://<database>/<schema>/<hook_name>"
+
+# Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+[auth.sms.twilio]
+enabled = false
+account_sid = ""
+message_service_sid = ""
+# DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
+auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
+
+# Multi-factor-authentication is available to Supabase Pro plan.
+[auth.mfa]
+# Control how many MFA factors can be enrolled at once per user.
+max_enrolled_factors = 10
+
+# Control MFA via App Authenticator (TOTP)
+[auth.mfa.totp]
+enroll_enabled = false
+verify_enabled = false
+
+# Configure MFA via Phone Messaging
+[auth.mfa.phone]
+enroll_enabled = false
+verify_enabled = false
+otp_length = 6
+template = "Your code is {{ .Code }}"
+max_frequency = "5s"
+
+# Configure MFA via WebAuthn
+# [auth.mfa.web_authn]
+# enroll_enabled = true
+# verify_enabled = true
+
+# Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
+# `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
+# `twitter`, `x`, `slack`, `spotify`, `workos`, `zoom`.
+[auth.external.apple]
+enabled = false
+client_id = ""
+# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
+secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
+# Overrides the default auth callback URL derived from auth.external_url.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+# If enabled, the nonce check will be skipped. Required for local sign in with Google auth.
+skip_nonce_check = false
+# If enabled, it will allow the user to successfully authenticate when the provider does not return an email address.
+email_optional = false
+
+# Allow Solana wallet holders to sign in to your project via the Sign in with Solana (SIWS, EIP-4361) standard.
+# You can configure "web3" rate limit in the [auth.rate_limit] section and set up [auth.captcha] if self-hosting.
+[auth.web3.solana]
+enabled = false
+
+# Use Firebase Auth as a third-party provider alongside Supabase Auth.
+[auth.third_party.firebase]
+enabled = false
+# project_id = "my-firebase-project"
+
+# Use Auth0 as a third-party provider alongside Supabase Auth.
+[auth.third_party.auth0]
+enabled = false
+# tenant = "my-auth0-tenant"
+# tenant_region = "us"
+
+# Use AWS Cognito (Amplify) as a third-party provider alongside Supabase Auth.
+[auth.third_party.aws_cognito]
+enabled = false
+# user_pool_id = "my-user-pool-id"
+# user_pool_region = "us-east-1"
+
+# Use Clerk as a third-party provider alongside Supabase Auth.
+[auth.third_party.clerk]
+enabled = false
+# Obtain from https://clerk.com/setup/supabase
+# domain = "example.clerk.accounts.dev"
+
+# OAuth server configuration
+[auth.oauth_server]
+# Enable OAuth server functionality
+enabled = false
+# Path for OAuth consent flow UI
+authorization_url_path = "/oauth/consent"
+# Allow dynamic client registration
+allow_dynamic_registration = false
+
+[edge_runtime]
+enabled = true
+# Supported request policies: `oneshot`, `per_worker`.
+# `per_worker` (default) — enables hot reload during local development.
+# `oneshot` — fallback mode if hot reload causes issues (e.g. in large repos or with symlinks).
+policy = "per_worker"
+# Port to attach the Chrome inspector for debugging edge functions.
+inspector_port = 8083
+# The Deno major version to use.
+deno_version = 2
+
+# [edge_runtime.secrets]
+# secret_key = "env(SECRET_VALUE)"
+
+[analytics]
+enabled = true
+port = 57327
+# Configure one of the supported backends: `postgres`, `bigquery`.
+backend = "postgres"
+
+# Experimental features may be deprecated any time
+[experimental]
+# Configures Postgres storage engine to use OrioleDB (S3)
+orioledb_version = ""
+# Configures S3 bucket URL, eg. <bucket_name>.s3-<region>.amazonaws.com
+s3_host = "env(S3_HOST)"
+# Configures S3 bucket region, eg. us-east-1
+s3_region = "env(S3_REGION)"
+# Configures AWS_ACCESS_KEY_ID for S3 bucket
+s3_access_key = "env(S3_ACCESS_KEY)"
+# Configures AWS_SECRET_ACCESS_KEY for S3 bucket
+s3_secret_key = "env(S3_SECRET_KEY)"
+
+# [experimental.pgdelta]
+# When enabled, pg-delta becomes the active engine for supported schema flows.
+# enabled = false
+# Directory under `supabase/` where declarative files are written.
+# declarative_schema_path = "./database"
+# JSON string passed through to pg-delta SQL formatting.
+# format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+</file>
+
+</files>

@@ -34,8 +34,8 @@ Las Edge Functions de Supabase corren cerca del usuario, son serverless y pueden
 ## Prerequisitos
 
 ```bash
-npm install stripe @stripe/stripe-js
-npm install -g supabase  # CLI de Supabase para desplegar Edge Functions
+pnpm add stripe @stripe/stripe-js
+pnpm add -g supabase  # CLI de Supabase para desplegar Edge Functions
 ```
 
 Variables de entorno necesarias:

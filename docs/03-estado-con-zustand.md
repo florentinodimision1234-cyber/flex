@@ -25,8 +25,17 @@ Zustand resuelve todo esto con muy poco código y sin contextos anidados.
 
 ## Instalación
 
+- Instalación global de pnpm, alternativa moderna y (en teoría) más segura que npm.
+
 ```bash
-npm install zustand
+npm install -g pnpm@latest-11
+```
+
+- Podemos instalar nextjs dentro de esta carpeta, utilizando el "." al final de la instalación.
+  
+```bash
+pnpm create next-app .
+pnpm add zustand
 ```
 
 ---

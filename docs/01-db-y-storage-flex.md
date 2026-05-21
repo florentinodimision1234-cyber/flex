@@ -866,4 +866,4 @@ Añade una tabla `eventos` a la DB que represente las noches de jam session:
 
 | | |
 |---|---|
-| | [02 — Seguridad con RLS →](./02-seguridad-rls.md) |
+| [← 00 — Preparación examen](./00-preparacion-examen-nextjs-db.md) | [02 — Seguridad con RLS →](./02-seguridad-rls.md) |

@@ -1,6 +1,5 @@
 # 01 — Teoría previa: PostgreSQL desde cero
 
-> Nivel: Sin conocimientos previos de bases de datos  
 > Objetivo: entender los conceptos que aparecen en el esquema de Flex antes de leer el código
 
 ---
@@ -1305,4 +1304,4 @@ CREATE TRIGGER trigger_notificar_reserva
 
 | | |
 |---|---|
-| | [01 — Base de Datos y Storage →](./01-db-y-storage-flex.md) |
+| [← 00 — Preparación examen](../00-preparacion-examen-nextjs-db.md) | [01 — Base de Datos y Storage →](../01-db-y-storage-flex.md) |
