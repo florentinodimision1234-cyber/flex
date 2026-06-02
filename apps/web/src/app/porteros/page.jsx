@@ -32,6 +32,8 @@ export default function PaginaPorteros() {
     setCodigo('')
   }
 
+
+  // solo enseñale esto al que tenga rol = 'portero' y si no, lo devuelves a la pagina principal route.push('/')
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6">

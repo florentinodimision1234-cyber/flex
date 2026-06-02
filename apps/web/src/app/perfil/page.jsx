@@ -3,6 +3,10 @@
 import { useState } from 'react'
 import { Camera, Lock, Bell, Shield, LogOut, CheckCircle, CreditCard, Plus, Trash2 } from 'lucide-react'
 
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { useSesionStore } from '@/store/sesionStore'
+
 const TABS = [
   { id: 'personal', label: 'Datos personales' },
   { id: 'pago', label: 'Pago' },
@@ -28,6 +32,15 @@ export default function PaginaPerfil() {
   const [tab, setTab] = useState('personal')
   const [guardado, setGuardado] = useState(false)
   const [avatar, setAvatar] = useState(null)
+  const router = useRouter()
+  const { limpiarSesion } = useSesionStore()
+
+  async function handleLogout() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    limpiarSesion()
+    router.push('/login')
+  }
 
   const [perfil, setPerfil] = useState({
     nombre: 'Alex García',
@@ -71,7 +84,17 @@ export default function PaginaPerfil() {
 
   return (
     <div className="p-4 sm:p-8 max-w-2xl">
+      <div className='mb-8 justify-self-end'>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-4 py-2 border border-red-500/40 text-red-400 hover:bg-red-500/10 rounded-xl text-sm transition-colors"
+        >
+          <LogOut size={15} />
+          Cerrar sesión
+        </button>
+      </div>
       <div className="mb-8">
+
         <h1 className="text-xl sm:text-2xl font-bold text-zinc-100">Mi perfil</h1>
         <p className="text-zinc-500 text-sm mt-1">Gestiona tu cuenta y preferencias</p>
       </div>

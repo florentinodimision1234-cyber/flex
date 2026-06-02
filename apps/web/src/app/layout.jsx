@@ -1,3 +1,4 @@
+import { IniciarSesion } from '@/components/IniciarSesion'
 import './globals.css'
 import Shell from '@/components/Shell'
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <IniciarSesion/>
         <Shell>{children}</Shell>
       </body>
     </html>

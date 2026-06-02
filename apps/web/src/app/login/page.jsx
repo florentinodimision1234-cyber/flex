@@ -1,12 +1,50 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import FlexLogo from '@/components/FlexLogo'
+import { createClient } from '@/lib/supabase/client'
+
+const RUTA_POR_ROL = {
+  cliente: '/',
+  staff:   '/staff',
+  portero: '/porteros',
+  admin:   '/admin',
+}
 
 export default function PaginaLogin() {
-  const [email, setEmail] = useState('')
+  const router = useRouter()
+  const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError]       = useState('')
+  const [cargando, setCargando] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setCargando(true)
+
+    const supabase = createClient()
+
+    const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
+
+    if (authError) {
+      setCargando(false)
+      setError('Email o contraseña incorrectos.')
+      return
+    }
+
+    // Obtener rol para redirigir a la ruta correcta
+    const { data: perfil } = await supabase
+      .from('perfiles')
+      .select('rol')
+      .eq('id', data.user.id)
+      .single()
+
+    const rol = perfil?.rol ?? 'cliente'
+    router.push(RUTA_POR_ROL[rol] ?? '/')
+  }
 
   return (
     <div className="min-h-screen flex">
@@ -27,7 +65,6 @@ export default function PaginaLogin() {
 
       {/* Panel derecho — formulario */}
       <div className="flex-1 flex flex-col justify-center items-center px-8 py-12 bg-zinc-950">
-        {/* Fondo foto en móvil */}
         <div className="lg:hidden absolute inset-0 -z-10">
           <img
             src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop&q=80"
@@ -44,7 +81,13 @@ export default function PaginaLogin() {
           <h1 className="text-2xl font-bold text-zinc-100 mb-1">Bienvenido de nuevo</h1>
           <p className="text-zinc-500 text-sm mb-8">Accede a tu cuenta Flex</p>
 
-          <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3 mb-4">
+              {error}
+            </div>
+          )}
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label className="text-zinc-500 text-xs block mb-1.5">Email</label>
               <input
@@ -52,6 +95,7 @@ export default function PaginaLogin() {
                 placeholder="tu@email.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                required
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none focus:border-gold-500 transition-colors"
               />
             </div>
@@ -62,6 +106,7 @@ export default function PaginaLogin() {
                 placeholder="••••••••"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
+                required
                 className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 outline-none focus:border-gold-500 transition-colors"
               />
             </div>
@@ -72,9 +117,10 @@ export default function PaginaLogin() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-gold-500 hover:bg-gold-600 text-zinc-950 font-bold rounded-xl transition-colors mt-2"
+              disabled={cargando}
+              className="w-full py-3 bg-gold-500 hover:bg-gold-600 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-950 font-bold rounded-xl transition-colors mt-2"
             >
-              Entrar
+              {cargando ? 'Entrando…' : 'Entrar'}
             </button>
           </form>
 
