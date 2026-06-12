@@ -14,7 +14,8 @@ export default function ModalUsuario({ form, setForm, onGuardar, onClose, isPend
             <X size={18} />
           </button>
         </div>
-        <div className="space-y-3">
+
+        <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); onGuardar() }}>
           <input
             placeholder="Nombre completo"
             value={form.nombre}
@@ -38,7 +39,7 @@ export default function ModalUsuario({ form, setForm, onGuardar, onClose, isPend
               <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform ${form.activo ? 'translate-x-4' : 'translate-x-0'}`} />
             </button>
           </div>
-        </div>
+        </form>
         <div className="flex gap-3 mt-6">
           <button
             onClick={onClose}

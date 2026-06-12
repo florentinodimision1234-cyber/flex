@@ -58,7 +58,7 @@ export default function TabUsuarios({ perfiles }) {
             <tr className="border-b border-zinc-800 text-zinc-500 text-xs uppercase">
               <th className="text-left px-4 py-3">Nombre</th>
               <th className="text-left px-4 py-3">Rol</th>
-              <th className="text-left px-4 py-3">Estado</th>
+              <th className="text-left px-4 py-3">Creado</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>

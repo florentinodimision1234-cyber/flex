@@ -1,14 +1,29 @@
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import AdminClient from '@/components/admin/AdminClient'
+
+function createAdminClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  )
+}
 
 export default async function PaginaAdmin() {
   const supabase = await createClient()
+  const supabaseAdmin = createAdminClient()
 
   const [
     { data: productos, error: errProductos },
     { data: perfiles, error: errPerfiles },
   ] = await Promise.all([
-    supabase.from('productos').select('id, nombre, descripcion, precio, categoria, disponible').order('categoria'),
+    supabase.from('productos').select('id, nombre, descripcion, precio, categoria, disponible, imagen_url').order('categoria'),
     supabase.from('perfiles').select('id, nombre, rol, avatar_url, activo').order('nombre'),
   ])
 

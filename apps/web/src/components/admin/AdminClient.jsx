@@ -10,15 +10,15 @@ export default function AdminClient({ productosIniciales, perfilesIniciales }) {
   const [tab, setTab] = useState('Usuarios')
 
   const productosActivos = productosIniciales.filter((p) => p.disponible).length
+  const admins = perfilesIniciales.filter((u) => u.rol === 'admin').length
 
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-zinc-100">Panel de administración</h1>
-        <p className="text-zinc-500 text-sm mt-1">Gestión de usuarios y productos</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-zinc-100">Panel de administracion</h1>
+        <p className="text-zinc-500 text-sm mt-1">Gestion de usuarios y productos</p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
         {[
           { label: 'Usuarios totales',  valor: perfilesIniciales.length },
@@ -32,7 +32,6 @@ export default function AdminClient({ productosIniciales, perfilesIniciales }) {
         ))}
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-2 mb-6">
         {TABS.map((t) => (
           <button
